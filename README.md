@@ -1,4 +1,4 @@
-# monoply-fluid
+# monopoly-fluid
 
 Monopoly game based on [Fluid Framework](https://fluidframework.com/docs/)
 
