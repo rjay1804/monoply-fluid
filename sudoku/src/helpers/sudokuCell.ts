@@ -39,7 +39,7 @@ export class SudokuCell implements sudoku.Cell {
      * @param coordinate - The coordinate of the cell in the grid.
      */
     public constructor(
-        public value: string,
+        public value: number,
         //public readonly correctValue: number,
         public readonly coordinate: CoordinateString,
         public color: string
