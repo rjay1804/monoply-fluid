@@ -10,16 +10,4 @@ class Property {
     type_;
 }
 
-class Hotel extends Property {
-    constructor(rent, price) {
-        super(rent, price, "hotel");
-    }
-
-}
-
-class House extends Property {
-    constructor(rent, price) {
-        super(rent, price, "house");
-    }
-
-}
+module.export = Property;
