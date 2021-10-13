@@ -9,7 +9,7 @@ import { ISharedMap, SharedMap } from "@fluidframework/map";
 import { IFluidHTMLView } from "@fluidframework/view-interfaces";
 //import React from "react";
 import ReactDOM from "react-dom";
-//import {Board} from "../src/model/board";
+import {Board} from "../src/model/board";
 
 /**
  * A collaborative Sudoku component built on the Fluid Framework.
@@ -57,6 +57,10 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
         this.root.set(this.presenceMapKey, clientPresence.handle);
+
+        var game = new Board;
+        console.log("Check game");
+        console.log(game);
     }
 
     /**

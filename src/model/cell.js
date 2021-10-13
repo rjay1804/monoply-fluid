@@ -7,7 +7,7 @@ export class Cell {
         this.price = price;
         this.type = type;
         this.name = name;
-        this.id = new randomUUID;
+        //this.id = new randomUUID;
     }
 
     enter(player) {

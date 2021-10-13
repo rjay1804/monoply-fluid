@@ -1,6 +1,9 @@
 import {Cell} from "./cell";
 import {Dice} from "./Dice";
 import {Place} from "./place";
+import {Jail} from "./jail";
+import {CommunityChest} from "./communitychest";
+import {Chance} from "./chance";
 
 export class Board {
 
@@ -20,6 +23,9 @@ export class Board {
                 } 
             }
         }
+
+        console.log("before special cells are set");
+        console.log(this.board);
 
         this.dice = new Dice(6);
         this.setSpecialCells();
