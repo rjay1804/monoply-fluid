@@ -33,6 +33,7 @@
         "@fluidframework/sequence": "^0.33.3",
         "@fluidframework/shared-object-base": "^0.33.3",
         "@fluidframework/view-interfaces": "^0.33.3",
+        "events": "^3.3.0",
         "react": "^17.0.0",
         "react-dom": "^17.0.0",
         "sudokus": "^1.0.2"

@@ -74,7 +74,7 @@
     var skipOrientations = {
       horizontal:     function(x,y,l) { return {x: 0,   y: y+1  }; },
       horizontalBack: function(x,y,l) { return {x: l-1, y: y    }; },
-      vertical:       function(x,y,l) { return {x: 0,   y: y+100}; },
+      vertical:       function(x,y,l) { return {x: 0,   y: y+121}; },
       verticalUp:     function(x,y,l) { return {x: 0,   y: l-1  }; },
       diagonal:       function(x,y,l) { return {x: 0,   y: y+1  }; },
       diagonalBack:   function(x,y,l) { return {x: l-1, y: x>=l-1?y+1:y    }; },
@@ -338,7 +338,7 @@
           fillBlanks:       opts.fillBlanks !== undefined ? opts.fillBlanks : true,
           allowExtraBlanks: opts.allowExtraBlanks !== undefined ? opts.allowExtraBlanks : true,
           maxAttempts:      opts.maxAttempts || 3,
-          maxGridGrowth:    opts.maxGridGrowth !== undefined ? opts.maxGridGrowth : 10,
+          maxGridGrowth:    opts.maxGridGrowth !== undefined ? opts.maxGridGrowth : 11,
           preferOverlap:    opts.preferOverlap !== undefined ? opts.preferOverlap : true
         };
 

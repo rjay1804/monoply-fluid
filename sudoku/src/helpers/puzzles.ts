@@ -9,37 +9,92 @@ import { Coordinate } from "./coordinate";
 import { SudokuCell } from "./sudokuCell";
 
 import {wordfind} from '../../public/wordfind'
+//import {cli_browser} from '../../public/cli-browser'
+import {monopoly} from '../../public/monopoly';
 //import {wordfindgame} from '../../public/wordfindgame'
 
 //declare var WordFindGame: any;
 
+const { objFillDefaults } = require('../../public/helper');
+const { EventEmitter } = require('events');
+
+const Team = require('../../public/Team');
+class Monopoly extends EventEmitter {
+
+    constructor(options = {}) {
+      super();
+  
+      const self = this;
+      console.log("Random check");
+      const opts = objFillDefaults(options, {
+        board: {},
+        teams: 2,
+        wallet: 5000
+      });
+  
+  
+      opts.board.pieces = opts.teams;
+      this.board = new Monopoly.MonopolyBoard(opts.board);
+  
+      this.teams = new Array(opts.teams).fill(true).map((value, index) => {
+        return new Team(this, index, opts.wallet);
+      });
+  
+      this.currentAction = null;
+  
+  
+    }
+    payment(payingTeam, targetTeam, amount) {
+      payingTeam.wallet -= amount;
+      targetTeam.wallet += amount;
+  
+      return {};
+    }
+    action(actionRecord, team) {
+      return this.board.actions.methods[actionRecord.type](team, actionRecord.fields);
+    }
+    // Firing all related eventsto next actions
+    nextActions(actions) {
+      for (let actionName in actions) {
+        if (actions.hasOwnProperty(actionName)) {
+          // If current action is valid
+          if (actions[actionName]) {
+            // Emit the action related event from its name with the action specific data
+            this.emit("payment", actions[actionName]);
+          }
+        }
+      }
+    }
+  }
+
+
 /**
- * An array of numbers 0-9 for convenient looping when building Sudoku grids.
+ * An array of numbers 0-10 for convenient looping when building Sudoku grids.
  */
-export const PUZZLE_INDEXES = Array.from(Array(10).keys());
+export const PUZZLE_INDEXES = Array.from(Array(11).keys());
 
 export const PUZZLES = [
     [
-        [0, 0, 2, 0, 6, 8, 0, 9, 7],
-        [4, 0, 6, 3, 0, 9, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0, 3, 5],
-        [0, 0, 7, 0, 0, 0, 0, 5, 8],
-        [6, 0, 8, 0, 0, 0, 7, 0, 4],
-        [5, 2, 0, 0, 0, 0, 9, 0, 0],
-        [1, 9, 0, 0, 0, 3, 0, 0, 0],
-        [0, 0, 0, 7, 0, 4, 8, 0, 9],
-        [8, 7, 0, 1, 9, 0, 3, 0, 0],
+        [0, 0, 2, 0, 6, 8, 0, 9, 7, 1],
+        [4, 0, 6, 3, 0, 9, 0, 0, 0, 1],
+        [0, 0, 0, 2, 0, 0, 0, 3, 5, 1],
+        [0, 0, 7, 0, 0, 0, 0, 5, 8, 1],
+        [6, 0, 8, 0, 0, 0, 7, 0, 4, 1],
+        [5, 2, 0, 0, 0, 0, 9, 0, 0, 1],
+        [1, 9, 0, 0, 0, 3, 0, 0, 0, 1],
+        [0, 0, 0, 7, 0, 4, 8, 0, 9, 1],
+        [8, 7, 0, 1, 9, 0, 3, 0, 0, 1],
     ],
     [
-        [0, 0, 0, 2, 9, 0, 1, 0, 0],
-        [6, 0, 0, 5, 0, 1, 0, 7, 0],
-        [0, 0, 0, 0, 0, 0, 0, 3, 4],
-        [0, 0, 0, 0, 0, 0, 9, 4, 0],
-        [4, 5, 0, 3, 0, 0, 0, 6, 2],
-        [2, 0, 9, 0, 0, 4, 3, 1, 0],
-        [0, 2, 0, 0, 0, 0, 4, 9, 0],
-        [0, 0, 6, 0, 0, 8, 0, 0, 0],
-        [0, 4, 3, 0, 2, 0, 0, 8, 7],
+        [0, 0, 2, 0, 6, 8, 0, 9, 7, 1],
+        [4, 0, 6, 3, 0, 9, 0, 0, 0, 1],
+        [0, 0, 0, 2, 0, 0, 0, 3, 5, 1],
+        [0, 0, 7, 0, 0, 0, 0, 5, 8, 1],
+        [6, 0, 8, 0, 0, 0, 7, 0, 4, 1],
+        [5, 2, 0, 0, 0, 0, 9, 0, 0, 1],
+        [1, 9, 0, 0, 0, 3, 0, 0, 0, 1],
+        [0, 0, 0, 7, 0, 4, 8, 0, 9, 1],
+        [8, 7, 0, 1, 9, 0, 3, 0, 0, 1],
     ],
 ];
 
@@ -98,8 +153,8 @@ export function loadPuzzle(index: number, puzzleMap: ISharedMap, solutionMap: IS
             // Start a basic word game without customization !
             const puzzleInput = wordfind.newPuzzle(words, {
                 // Set dimensions of the puzzle
-                height: 10,
-                width:  10,
+                height: 11,
+                width:  11,
                 // or enable all with => orientations: wordfind.validOrientations,
                 orientations: ['horizontal', 'vertical'],
                 // Set a random character the empty spaces
@@ -113,6 +168,22 @@ export function loadPuzzle(index: number, puzzleMap: ISharedMap, solutionMap: IS
 
 
     console.log(solution.found);
+    
+
+
+    Monopoly.MonopolyBoard = require('../monopoly-board');
+
+    // if (typeof window !== 'undefined') {
+    //   window.Monopoly = Monopoly;
+    // }
+
+    console.log("Check 180");
+    
+    
+    //module.exports = Monopoly;
+    console.log("Try to create Monopoly board");
+    var newGame = new Monopoly;
+    console.log(newGame);
 
     var i:number; 
 
@@ -141,3 +212,5 @@ export function loadPuzzle(index: number, puzzleMap: ISharedMap, solutionMap: IS
     }
     return solution;
 }
+
+
