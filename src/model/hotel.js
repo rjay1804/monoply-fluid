@@ -1,3 +1,5 @@
+import {Property} from "./property";
+
 export class Hotel extends Property {
 
     constructor() {
