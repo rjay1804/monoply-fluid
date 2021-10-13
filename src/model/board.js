@@ -38,19 +38,19 @@ export class Board {
     }
 
     setJail() {
-        this.board[0, 10] = new Jail();
+        this.board[0][10] = new Jail();
     }
 
     setCommunityChest() {
-        this.board[0,2] = new CommunityChest();
-        this.board[7,0] = new CommunityChest();
-        this.board[7,10] = new CommunityChest();
+        this.board[0][2] = new CommunityChest();
+        this.board[7][0] = new CommunityChest();
+        this.board[7][10] = new CommunityChest();
     }
 
     setChance() {
-        this.board[0,7] = new Chance();
-        this.board[10,8] = new Chance();
-        this.board[4,0] = new Chance();
+        this.board[0][7] = new Chance();
+        this.board[10][8] = new Chance();
+        this.board[4][0] = new Chance();
     }
 
     addPlayer(player) {
