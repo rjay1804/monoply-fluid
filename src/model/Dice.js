@@ -1,8 +1,5 @@
 class Dice {
 
-    max_;
-    min_;
-
     constructor(maxVal) {
         this.min_ = 1;
         this.max_ = maxVal;

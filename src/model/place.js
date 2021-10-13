@@ -1,7 +1,9 @@
+import {Cell} from "./cell";
+
 class Place extends Cell {
 
-    constructor(colour, price) {
-        super(colour, price, "place")
+    constructor() {
+        super("white", 50, "place", "try")
     }
 
     enter(player) {

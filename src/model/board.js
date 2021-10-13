@@ -1,18 +1,21 @@
+import {Cell} from "./cell";
+import {Dice} from "./Dice";
+import {Place} from "./place";
+
 class Board {
 
-    board_;
-    dice_;
-    players_;
-
-    colours = ["red", "yellow", "blue", "green"]
+    // board_;
+    // dice_;
+    // players_;
 
     constructor() {
-        board_ = new Array();
+        this.colours = ["red", "yellow", "blue", "green"]
+        this.board_ = new Array();
         for (var i = 0; i < 11; i++) {
             this.board_[i] = new Array();
             for (var j = 0; j < 11; j++) {
                 if(i == 0 || i == 10 || j == 0 || j == 10) {
-                    this.board_[i][j] = new Place(this.colours[(i+j)%this.colours.length], 1000);
+                    this.board_[i][j] = new Place();
                 }
                 else {
                     this.board_[i][j] = new Cell("white", 0, "cell", "");
@@ -20,7 +23,7 @@ class Board {
             }
         }
 
-        dice_ = new Dice(6);
+        this.dice_ = new Dice(6);
         this.setSpecialCells();
     }
 
@@ -47,7 +50,7 @@ class Board {
     }
 
     addPlayer(player) {
-        players_.push(player);
+        this.players_.push(player);
     }
     
 }

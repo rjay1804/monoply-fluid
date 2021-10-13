@@ -9,6 +9,7 @@ import { ISharedMap, SharedMap } from "@fluidframework/map";
 import { IFluidHTMLView } from "@fluidframework/view-interfaces";
 //import React from "react";
 import ReactDOM from "react-dom";
+//import {Board} from "../src/model/board";
 
 /**
  * A collaborative Sudoku component built on the Fluid Framework.
