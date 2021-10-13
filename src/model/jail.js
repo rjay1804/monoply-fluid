@@ -3,7 +3,7 @@ import {Cell} from "./cell";
 export class Jail extends Cell {
 
     constructor() {
-        super("white", 0, "jail", "Jail");
+        super("white", 0, "Jail", "jail");
     }
 
     enter(player) {

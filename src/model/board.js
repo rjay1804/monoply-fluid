@@ -9,6 +9,10 @@ export class Board {
 
     constructor() {
         this.colours = ["red", "yellow", "blue", "green"]
+        this.placeNames = ["Adhra", "Arunachal", "Assam", "Bihar", "Chattisgarh", "Goa", "Gujarat",
+                          "Haryana", "Himachal", "Jharkhand", "Karnataka", "Kerela", "Madhya Pradesh",
+                           "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+                            "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "West Bengal"];
         
         this.board = new Array();
         
@@ -16,7 +20,8 @@ export class Board {
             this.board[i] = new Array();
             for (var j = 0; j < 11; j++) {
                 if(i == 0 || i == 10 || j == 0 || j == 10) {
-                    this.board[i][j] = new Place(this.colours[(i+j)%this.colours.length], 100);
+                    this.board[i][j] = new Place(this.colours[(i+j)%this.colours.length], 100, 
+                                                this.placeNames[(i+j)%this.placeNames.length]);
                 }
                 else {
                     this.board[i][j] = new Cell("white", 0, "cell", "");

@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 
 export class Cell {
 
-    constructor(colour, price, type, name) {
+    constructor(colour, price, name, type) {
         this.colour = colour;
         this.price = price;
         this.type = type;
