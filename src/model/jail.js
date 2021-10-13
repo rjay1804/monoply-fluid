@@ -4,12 +4,12 @@ class Jail extends Cell {
 
     }
 
-    enter() {
-
+    enter(player) {
+        
     }
 
-    exit() {
-
+    exit(player) {
+        player.money -= 500;
     }
 }
 

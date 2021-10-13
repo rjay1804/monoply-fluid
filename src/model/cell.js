@@ -1,7 +1,17 @@
 class Cell {
-    constructor(row, col) {
+    
+    id_ = 0;
+    colour_ = "white"
+    price_ = 0;
+    owner_;
+    row_ = -1;
+    col_ = -1;
+
+    constructor(row, col, colour, price) {
         this.row_ = row;
         this.col_ = col;
+        this.colour_ = colour;
+        this.price_ = price;
     }
 
     enter(player) {
@@ -10,10 +20,6 @@ class Cell {
 
     exit(player) {
 
-    }
-
-    setColor(color) {
-        color_ = color;
     }
 
     setId(id) {
@@ -28,12 +34,11 @@ class Cell {
         return this.col_;
     }
 
-    id_ = 0;
-    color_ = "white"
-    price_ = 0;
-    owner_ = "bank";
-    row_ = -1;
-    col_ = -1;
+    buy(player) {
+        player.money -= this.price_;
+        this.owner = player;
+    }
+    
 }
 
 module.export = Cell;

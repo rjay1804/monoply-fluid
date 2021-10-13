@@ -1,9 +1,9 @@
 class Hotel extends Property {
-    
-    constructor(rent, price) {
-        super(rent, price, "hotel");
-    }
 
+    constructor() {
+        super.price(1000);
+        super.rent(100);
+    }
 }
 
 module.export = Hotel;

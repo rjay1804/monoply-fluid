@@ -1,5 +1,9 @@
 class Board {
 
+    board_;
+    dice_;
+    players_;
+
     constructor() {
         board_ = new Array();
         for (var i = 0; i < 11; i++) {
@@ -10,17 +14,36 @@ class Board {
         }
 
         dice_ = new Dice(6);
-        setSpecialCells();
+        this.setPlaces();
+        this.setSpecialCells();
     }
+
     setSpecialCells() {
+        this.setJail()
+        this.setCommunityChest()
+        this.setChance();
+    }
+
+    setJail() {
+
+    }
+
+    setCommunityChest() {
+
+    }
+
+    setChance() {
+
+    }
+
+    setPlaces() {
 
     }
 
     addPlayer(player) {
         players_.push(player);
     }
-    board_;
-    dice_;
-    players_;
+    
 }
 
+module.export = Board;

@@ -1,7 +1,8 @@
 class House extends Property {
     
-    constructor(rent, price) {
-        super(rent, price, "house");
+    constructor() {
+        super.price(500);
+        super.rent(50);
     }
 
 }

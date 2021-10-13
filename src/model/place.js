@@ -4,12 +4,24 @@ class Place extends Cell {
         this.properties = new ArrayList;
     }
 
-    enter() {
-
+    enter(player) {
+        if(this.owner == null) {
+            // ask to buy?
+            buy(player);
+        } else if(this.owner == player) {
+            // already owns the property
+        } else {
+            // check for rental
+        }
     }
 
-    exit() {
+    exit(player) {
+        // nothing here.
+    }
 
+    buy(player) {
+        player.money -= this.price_;
+        this.owner_ = player;
     }
 
 }
