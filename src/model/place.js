@@ -10,6 +10,8 @@ class Place extends Cell {
             buy(player);
         } else if(this.owner == player) {
             // already owns the property
+            // ask to build property?
+            
         } else {
             // check for rental
         }
