@@ -1,0 +1,19 @@
+{
+  "name": "monopoly-fluid",
+  "version": "1.0.0",
+  "description": "Monopoly game based on Fluid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjay1804/monopoly-fluid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjay1804/monopoly-fluid/issues"
+  },
+  "homepage": "https://github.com/rjay1804/monopoly-fluid#readme"
+}
