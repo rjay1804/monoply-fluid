@@ -7,18 +7,23 @@ class Cell {
     enter(player) {
 
     }
+
     exit(player) {
 
     }
+
     setColor(color) {
         color_ = color;
     }
+
     setId(id) {
         id_ = id;
     }
+
     rowId() {
         return this.row_;
     }
+    
     colId() {
         return this.col_;
     }
