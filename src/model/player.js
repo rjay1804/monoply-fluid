@@ -1,6 +1,6 @@
 const { randomUUID } = require("crypto");
 
-class Player {
+export class Player {
     
     id;
     name;
@@ -15,5 +15,3 @@ class Player {
         // status if required
     }
 }
-
-module.export = Player;

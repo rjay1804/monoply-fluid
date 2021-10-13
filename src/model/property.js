@@ -1,4 +1,4 @@
-class Property {
+export class Property {
 
     rent;
     price;
@@ -8,5 +8,3 @@ class Property {
         this.price = price;
     }
 }
-
-module.export = Property;

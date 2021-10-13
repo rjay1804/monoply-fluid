@@ -1,19 +1,13 @@
-class Cell {
-    
-    // colour_ = "white"
-    // price_ = 0;
-    // owner_;
-    // // row_ = -1;
-    // // col_ = -1;
-    // type;
-    // name;
+import { randomUUID } from "crypto";
+
+export class Cell {
 
     constructor(colour, price, type, name) {
-        this.colour_ = colour;
-        this.price_ = price;
+        this.colour = colour;
+        this.price = price;
         this.type = type;
         this.name = name;
-        this.id_ = 0;
+        this.id = new randomUUID;
     }
 
     enter(player) {
@@ -24,22 +18,16 @@ class Cell {
 
     }
 
-    setId(id) {
-        this.id_ = id;
-    }
-
-    rowId() {
-        return this.row_;
-    }
+    // rowId() {
+    //     return this.row_;
+    // }
     
-    colId() {
-        return this.col_;
-    }
+    // colId() {
+    //     return this.col_;
+    // }
 
     buy(player) {
-    
+        // no implementation here
     }
     
 }
-
-module.export = Cell;

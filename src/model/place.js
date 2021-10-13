@@ -1,15 +1,15 @@
 import {Cell} from "./cell";
 
-class Place extends Cell {
+export class Place extends Cell {
 
-    constructor() {
-        super("white", 50, "place", "try")
+    constructor(colour, price) {
+        super(colour, price, "place", "place name");
     }
 
     enter(player) {
         if(this.owner == null) {
             // ask to buy?
-            buy(player);
+            this.buy(player);
         } else if(this.owner == player) {
             // already owns the property
             // ask to build property?
@@ -29,5 +29,3 @@ class Place extends Cell {
     }
 
 }
-
-module.export = Place;

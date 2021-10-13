@@ -1,7 +1,9 @@
-class Jail extends Cell {
+import {Cell} from "./cell";
+
+export class Jail extends Cell {
 
     constructor() {
-        super("white", 0, "jail");
+        super("white", 0, "jail", "Jail");
     }
 
     enter(player) {
@@ -12,5 +14,3 @@ class Jail extends Cell {
         player.money -= 500;
     }
 }
-
-module.export = Jail;

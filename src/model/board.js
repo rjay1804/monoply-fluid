@@ -2,28 +2,26 @@ import {Cell} from "./cell";
 import {Dice} from "./Dice";
 import {Place} from "./place";
 
-class Board {
-
-    // board_;
-    // dice_;
-    // players_;
+export class Board {
 
     constructor() {
         this.colours = ["red", "yellow", "blue", "green"]
-        this.board_ = new Array();
+        
+        this.board = new Array();
+        
         for (var i = 0; i < 11; i++) {
-            this.board_[i] = new Array();
+            this.board[i] = new Array();
             for (var j = 0; j < 11; j++) {
                 if(i == 0 || i == 10 || j == 0 || j == 10) {
-                    this.board_[i][j] = new Place();
+                    this.board[i][j] = new Place(this.colours[(i+j)%this.colours.length], 100);
                 }
                 else {
-                    this.board_[i][j] = new Cell("white", 0, "cell", "");
+                    this.board[i][j] = new Cell("white", 0, "cell", "");
                 } 
             }
         }
 
-        this.dice_ = new Dice(6);
+        this.dice = new Dice(6);
         this.setSpecialCells();
     }
 
@@ -34,25 +32,23 @@ class Board {
     }
 
     setJail() {
-        this.board_[0, 10] = new Jail();
+        this.board[0, 10] = new Jail();
     }
 
     setCommunityChest() {
-        this.board_[0,2] = new CommunityChest();
-        this.board_[7,0] = new CommunityChest();
-        this.board_[7,10] = new CommunityChest();
+        this.board[0,2] = new CommunityChest();
+        this.board[7,0] = new CommunityChest();
+        this.board[7,10] = new CommunityChest();
     }
 
     setChance() {
-        this.board_[0,7] = new Chance();
-        this.board_[10,8] = new Chance();
-        this.board_[4,0] = new Chance();
+        this.board[0,7] = new Chance();
+        this.board[10,8] = new Chance();
+        this.board[4,0] = new Chance();
     }
 
     addPlayer(player) {
-        this.players_.push(player);
+        this.players.push(player);
     }
     
 }
-
-module.export = Board;
