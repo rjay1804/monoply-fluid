@@ -17,7 +17,8 @@
         "test": "jest",
         "test:report": "jest --reporters=default --reporters=jest-junit",
         "tsc": "tsc",
-        "webpack": "webpack"
+        "webpack": "webpack",
+        "clean": "rm -rf .cache .tmp lib build"
     },
     "eslintIgnore": [
         "*.spec.ts"

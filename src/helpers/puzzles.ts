@@ -10,7 +10,7 @@ import { SudokuCell } from "./sudokuCell";
 
 import {wordfind} from '../../public/wordfind'
 //import {cli_browser} from '../../public/cli-browser'
-import {monopoly} from '../../public/monopoly';
+//import {monopoly} from '../../public/monopoly';
 //import {wordfindgame} from '../../public/wordfindgame'
 
 //declare var WordFindGame: any;
@@ -24,7 +24,7 @@ class Monopoly extends EventEmitter {
     constructor(options = {}) {
       super();
   
-      const self = this;
+      //const self = this;
       console.log("Random check");
       const opts = objFillDefaults(options, {
         board: {},
