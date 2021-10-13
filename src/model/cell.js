@@ -1,4 +1,4 @@
-class cell {
+class Cell {
     constructor(row, col) {
         this.row_ = row;
         this.col_ = col;
@@ -30,3 +30,5 @@ class cell {
     row_ = -1;
     col_ = -1;
 }
+
+module.export = Cell;
