@@ -1,7 +1,7 @@
 class Chance extends Cell {
 
-    constructor(options) {
-
+    constructor() {
+        super("white", 0, "chance")
     }
 
     enter() {

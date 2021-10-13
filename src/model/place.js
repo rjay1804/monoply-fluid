@@ -1,7 +1,7 @@
 class Place extends Cell {
 
-    constructor(options) {
-        this.properties = new ArrayList;
+    constructor(colour, price) {
+        super(colour, price, "place")
     }
 
     enter(player) {

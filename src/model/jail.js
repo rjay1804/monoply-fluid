@@ -1,7 +1,7 @@
 class Jail extends Cell {
 
     constructor() {
-
+        super("white", 0, "jail");
     }
 
     enter(player) {

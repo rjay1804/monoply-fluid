@@ -4,14 +4,16 @@ class Cell {
     colour_ = "white"
     price_ = 0;
     owner_;
-    row_ = -1;
-    col_ = -1;
+    // row_ = -1;
+    // col_ = -1;
+    type;
+    name;
 
-    constructor(row, col, colour, price) {
-        this.row_ = row;
-        this.col_ = col;
+    constructor(colour, price, type, name) {
         this.colour_ = colour;
         this.price_ = price;
+        this.type = type;
+        this.name = name;
     }
 
     enter(player) {
