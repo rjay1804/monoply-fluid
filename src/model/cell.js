@@ -35,8 +35,7 @@ class Cell {
     }
 
     buy(player) {
-        player.money -= this.price_;
-        this.owner = player;
+    
     }
     
 }
