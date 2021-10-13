@@ -7,9 +7,11 @@ import { DataObject, DataObjectFactory } from "@fluidframework/aqueduct";
 import { IFluidHandle } from "@fluidframework/core-interfaces";
 import { ISharedMap, SharedMap } from "@fluidframework/map";
 import { IFluidHTMLView } from "@fluidframework/view-interfaces";
+import React from "react";
 //import React from "react";
 import ReactDOM from "react-dom";
-import {Board} from "../src/model/board";
+import { MonopolyView}  from "../src/react/monopolyView";
+//import {Board} from "../src/model/board";
 
 /**
  * A collaborative Sudoku component built on the Fluid Framework.
@@ -57,10 +59,6 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
         this.root.set(this.presenceMapKey, clientPresence.handle);
-
-        var game = new Board;
-        console.log("Check game");
-        console.log(game);
     }
 
     /**
@@ -102,48 +100,16 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         }
         if (this.domElement) {
             let view: JSX.Element;
-            // if (this.puzzle) {
-            //     view = (
-            //         <SudokuView
-            //             puzzle={this.puzzle}
-            //             sol={this.solution}
-            //             clientPresence={this.clientPresence}
-            //             clientId={this.runtime.clientId ?? "not connected"}
-            //             setPresence={this.presenceSetter}
-            //             clientColorMap={this.colorMap}
-            //             counterMap={this.counter}
-            //             playerName = ""
-            //             startCoord = ""
-            //             endCoord = ""
-            //             clientScoreMap={this.clientScoreMap}
-            //         />
-            //     );
-            // } else {
-            //     view = <div />;
-            // }
+                view = (
+                    <MonopolyView
+                        clientPresence={this.clientPresence}
+                        clientId={this.runtime.clientId ?? "not connected"}
+                        playerName = ""
+                        startCoord = ""
+                        endCoord = ""
+                    />
+                );
             ReactDOM.render(view, this.domElement);
         }
     }
-
-    /**
-     * A function that can be used to update presence data.
-     *
-     * @param cellCoordinate - The coordinate of the cell to set.
-     * @param reset - If true, presence for the cell will be cleared.
-     */
-    //  private readonly presenceSetter = (cellCoordinate: string, reset: boolean): void => {
-    //     if (this.clientPresence) {
-    //         if (reset) {
-    //             // Retrieve the current clientId in the cell, if there is one
-    //             const prev = this.clientPresence.get<string>(cellCoordinate);
-    //             const isCurrentClient = this.runtime.clientId === prev;
-    //             if (!isCurrentClient) {
-    //                 return;
-    //             }
-    //             this.clientPresence.delete(cellCoordinate);
-    //         } else {
-    //             this.clientPresence.set(cellCoordinate, this.runtime.clientId);
-    //         }
-    //     }
-    // };
 }

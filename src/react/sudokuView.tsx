@@ -33,67 +33,7 @@ export interface ISudokuViewProps {
 export function SudokuView(props: ISudokuViewProps): JSX.Element {
     
     const [theme, setTheme] = React.useState("default");
-    //const [playerName, setPlayerName] = React.useState("default");
 
-    /*
-    const handleResetButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        props.puzzle.forEach((value: SudokuCell, key: CoordinateString) => {
-            if (!value.fixed && value.value !== 0) {
-                value.value = 0;
-                props.puzzle.set(key, value);
-            }
-            props.puzzle.set(key, value);
-        });
-    };
-    */
-
-    //const [userInput, setUserInput] = React.useState("default");
-
-    // const loadPuzzle1 = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    //     loadPuzzle(0, props.puzzle, props.sol);
-    // };
-
-    //let textInput:React.RefObject<HTMLInputElement> = React.createRef();
-
-    /*const checkInput = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        
-        if(checkUserInput(userInput, props.puzzle, props.sol)){
-
-            var start = userInput.split(":")[0];
-            var startRow = start.split(",")[1];
-            var startCol = start.split(",")[0];
-
-            var end = userInput.split(":")[1]
-            var endRow = end.split(",")[1];
-            var endCol = end.split(",")[0];
-            alert(playerName);
-            var i,j;
-            var color;
-            console.log(props.clientId);
-            if(props.clientColorMap.get(playerName) == undefined){
-                const count = props.counterMap.get<number>("current")+1;
-                color = getColor(count);
-                props.clientColorMap.set(playerName, color);      
-                props.counterMap.set("current", count);        
-            }
-            else{
-                color = props.clientColorMap.get(playerName);
-            }
-
-            for (i = startRow; i<=endRow;i++) {
-                for (j = startCol; j<=endCol;j++) {
-                    const key = Coordinate.asString(i, j);          
-                    const toSet = props.puzzle.get<SudokuCell>(key);
-                    toSet.color = color;
-                    props.puzzle.set(key, toSet);
-                }
-            }
-        }
-    };*/
-
-    // const loadPuzzle2 = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    //     loadPuzzle(1, props.puzzle, props.sol);
-    // };
 
     return (
         <div className={`sudoku ${theme}`} style={{minHeight: "100%", marginLeft: "38%"}}>
