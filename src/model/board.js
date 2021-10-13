@@ -24,9 +24,6 @@ export class Board {
             }
         }
 
-        console.log("before special cells are set");
-        console.log(this.board);
-
         this.dice = new Dice(6);
         this.setSpecialCells();
     }
