@@ -11,6 +11,9 @@ import React from "react";
 //import React from "react";
 import ReactDOM from "react-dom";
 import { MonopolyView}  from "../src/react/monopolyView";
+import '../src/view/index.css';
+//import App from './App';
+//import * as serviceWorker from '../src/view/serviceWorker';
 //import {Board} from "../src/model/board";
 
 /**
@@ -108,8 +111,21 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
                         startCoord = ""
                         endCoord = ""
                     />
+                    
                 );
-            ReactDOM.render(view, this.domElement);
+            ReactDOM.render(view,
+                this.domElement);
         }
     }
 }
+
+// var perf =require('./template.html');
+
+// class Index extends React.Component {
+//    render(){
+//       return (
+//          <iframe src={perf }></iframe>   /* like this */
+//       );
+//    }
+// }
+// export default Index;

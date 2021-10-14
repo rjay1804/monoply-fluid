@@ -5,9 +5,10 @@
 
 import { ISharedMap } from "@fluidframework/map";
 import React from "react";
-//import App from "../view/App";
-import GameBoard from "../view/client/GameBoard";
-import CssBaseline from "@material-ui/core/CssBaseline";
+//import ReactDOM from 'react-dom';
+import App from "../view/App";
+// import GameBoard from "../view/client/GameBoard";
+// import CssBaseline from "@material-ui/core/CssBaseline";
 
 /**
  * Props for the SudokuView React component.
@@ -20,6 +21,7 @@ export interface IMonopolyViewProps {
     endCoord: String;
 }
 
+
 /**
  * Renders a Sudoku grid and UI for resetting/loading puzzles and changing the theme.
  * @param props - Props for the component
@@ -27,12 +29,24 @@ export interface IMonopolyViewProps {
 export function MonopolyView(props: IMonopolyViewProps): JSX.Element {
 
     console.log("Inside MonopolyView");
+    //var game = require('./index.html');
     return (
-    <React.Fragment>
-        <CssBaseline />
+    //    App()
+    //game
+    // <div>
+    //     What does this do?
+    // </div>
+    // <React.Fragment>
+    //     <CssBaseline />
   
-        <GameBoard />
-    </React.Fragment>
+    //     <GameBoard />
+    // </React.Fragment>
+
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+        
+      
     );
 
 }
