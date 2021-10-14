@@ -43,9 +43,11 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
 
     private readonly monopolyMapKey = "monopoly-map";
     private readonly presenceMapKey = "clientPresence";
+    private readonly boardMapKey = "boardMap";
 
     private domElement: HTMLElement | undefined;
     private clientPresence: ISharedMap | undefined;
+    private boardMap: ISharedMap | undefined;
 
     /**
      * ComponentInitializingFirstTime is where you do setup for your component. This is only called once the first time
@@ -55,9 +57,11 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
      protected async initializingFirstTime() {
         // Create a new map for our Sudoku data
         const map = SharedMap.create(this.runtime);
+        const boardMap = SharedMap.create(this.runtime);
 
         // Store the new map under the sudokuMapKey key in the root SharedDirectory
         this.root.set(this.monopolyMapKey, map.handle);
+        this.root.set(this.boardMapKey, boardMap.handle);
 
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
@@ -87,6 +91,8 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         // this.puzzle.on("valueChanged", (changed, local, op) => {
         //     this.render();
         // });
+
+        this.boardMap = await this.root.get<IFluidHandle<ISharedMap>>(this.boardMapKey).get();
         
         this.clientPresence = await this.root
             .get<IFluidHandle<ISharedMap>>(this.presenceMapKey)
@@ -108,8 +114,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
                         clientPresence={this.clientPresence}
                         clientId={this.runtime.clientId ?? "not connected"}
                         playerName = ""
-                        startCoord = ""
-                        endCoord = ""
+                        boardMap={this.boardMap}
                     />
                     
                 );

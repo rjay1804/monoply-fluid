@@ -7,6 +7,7 @@ import { ISharedMap } from "@fluidframework/map";
 import React from "react";
 //import ReactDOM from 'react-dom';
 import App from "../view/App";
+import { Board } from "../model/board";
 // import GameBoard from "../view/client/GameBoard";
 // import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -17,8 +18,7 @@ export interface IMonopolyViewProps {
     clientId: string;
     clientPresence?: ISharedMap;
     playerName: String;
-    startCoord: String;
-    endCoord: String;
+    boardMap: ISharedMap;
 }
 
 
@@ -29,6 +29,10 @@ export interface IMonopolyViewProps {
 export function MonopolyView(props: IMonopolyViewProps): JSX.Element {
 
     console.log("Inside MonopolyView");
+    var board__ = new Board();
+    board__.setProps(props)
+    console.log("Board created?")
+    console.log(board__);
     //var game = require('./index.html');
     return (
     //    App()

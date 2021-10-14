@@ -11,7 +11,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { loadPuzzle } from "./helpers/puzzles";
 import { SudokuView } from "./react/sudokuView";
-import {Board} from "../src/model/board";
 
 // eslint-disable-next-line import/no-unassigned-import
 import "./helpers/styles.css";
@@ -74,8 +73,6 @@ export class FluidSudoku extends DataObject implements IFluidHTMLView {
         counter.set("current", 0);
         colorMap.set("not connected", "fixed");
         
-        var ch = new Board;
-        console.log(ch);
         loadPuzzle(0, map, solMap, colorMap, counter);
         
 
