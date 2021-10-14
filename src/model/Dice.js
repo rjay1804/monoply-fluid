@@ -1,7 +1,4 @@
-class Dice {
-
-    max_;
-    min_;
+export class Dice {
 
     constructor(maxVal) {
         this.min_ = 1;
@@ -10,10 +7,7 @@ class Dice {
     }
     
     rollDice() {
-
         return Math.floor(Math.random() * (+this.max_ - +this.min_) + +this.min_);
     }
     
 }
-
-module.export = Dice;

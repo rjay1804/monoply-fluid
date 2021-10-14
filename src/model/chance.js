@@ -1,12 +1,12 @@
-class Chance extends Cell {
+import {Cell} from "./cell";
 
-    constructor(options) {
+export class Chance extends Cell {
 
+    constructor() {
+        super("white", 0, "Chance", "chance");
     }
 
     enter() {
 
     }
 }
-
-module.export = Chance;

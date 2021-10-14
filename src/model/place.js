@@ -1,13 +1,16 @@
-class Place extends Cell {
+import {Cell} from "./cell";
 
-    constructor(options) {
-        this.properties = new ArrayList;
+export class Place extends Cell {
+
+    
+    constructor(colour, price, placeName) {
+        super(colour, price, placeName, "place");
     }
 
     enter(player) {
         if(this.owner == null) {
             // ask to buy?
-            buy(player);
+            this.buy(player);
         } else if(this.owner == player) {
             // already owns the property
             // ask to build property?
@@ -27,5 +30,3 @@ class Place extends Cell {
     }
 
 }
-
-module.export = Place;

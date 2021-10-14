@@ -5,10 +5,10 @@
 
 import { getTinyliciousContainer } from "@fluidframework/get-tinylicious-container";
 import { getDefaultObjectFromContainer } from "@fluidframework/aqueduct";
-import { ISudokuViewProps, SudokuView } from "./react/sudokuView";
-import { SudokuContainer } from "./container";
-import { FluidSudoku } from "./fluidSudoku";
-export { ISudokuViewProps, FluidSudoku, SudokuView, SudokuContainer };
+import { IMonopolyViewProps, MonopolyView } from "./react/monopolyView";
+import { MonopolyContainer } from "./container";
+import { FluidMonopoly } from "./fluidMonopoly";
+export { IMonopolyViewProps, FluidMonopoly, MonopolyView, MonopolyContainer };
 
 // Since this is a single page fluid application we are generating a new document id
 // if one was not provided
@@ -25,10 +25,10 @@ const documentId = window.location.hash.substring(1);
  */
 async function start() {
     // Get the Fluid Container associated with the provided id
-    const container = await getTinyliciousContainer(documentId, SudokuContainer, createNew);
+    const container = await getTinyliciousContainer(documentId, MonopolyContainer, createNew);
 
     // Get the Default Object from the Container
-    const defaultObject = await getDefaultObjectFromContainer<FluidSudoku>(container);
+    const defaultObject = await getDefaultObjectFromContainer<FluidMonopoly>(container);
 
     // For now we will just reach into the FluidObject to render it
     defaultObject.render(document.getElementById("content"));

@@ -1,20 +1,35 @@
-class Board {
+import {Cell} from "./cell";
+import {Dice} from "./Dice";
+import {Place} from "./place";
+import {Jail} from "./jail";
+import {CommunityChest} from "./communitychest";
+import {Chance} from "./chance";
 
-    board_;
-    dice_;
-    players_;
+export class Board {
 
     constructor() {
-        board_ = new Array();
+        this.colours = ["red", "yellow", "blue", "green"]
+        this.placeNames = ["Adhra", "Arunachal", "Assam", "Bihar", "Chattisgarh", "Goa", "Gujarat",
+                          "Haryana", "Himachal", "Jharkhand", "Karnataka", "Kerela", "Madhya Pradesh",
+                           "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+                            "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "West Bengal"];
+        
+        this.board = new Array();
+        
         for (var i = 0; i < 11; i++) {
-            this.board_[i] = new Array();
+            this.board[i] = new Array();
             for (var j = 0; j < 11; j++) {
-                this.board_[i][j] = new Cell(i, j);
+                if(i == 0 || i == 10 || j == 0 || j == 10) {
+                    this.board[i][j] = new Place(this.colours[(i+j)%this.colours.length], 100, 
+                                                this.placeNames[(i+j)%this.placeNames.length]);
+                }
+                else {
+                    this.board[i][j] = new Cell("white", 0, "cell", "");
+                } 
             }
         }
 
-        dice_ = new Dice(6);
-        this.setPlaces();
+        this.dice = new Dice(6);
         this.setSpecialCells();
     }
 
@@ -25,25 +40,23 @@ class Board {
     }
 
     setJail() {
-
+        this.board[0][10] = new Jail();
     }
 
     setCommunityChest() {
-
+        this.board[0][2] = new CommunityChest();
+        this.board[7][0] = new CommunityChest();
+        this.board[7][10] = new CommunityChest();
     }
 
     setChance() {
-
-    }
-
-    setPlaces() {
-
+        this.board[0][7] = new Chance();
+        this.board[10][8] = new Chance();
+        this.board[4][0] = new Chance();
     }
 
     addPlayer(player) {
-        players_.push(player);
+        this.players.push(player);
     }
     
 }
-
-module.export = Board;

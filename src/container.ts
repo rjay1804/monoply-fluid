@@ -5,6 +5,7 @@
 
 import { ContainerRuntimeFactoryWithDefaultDataStore } from "@fluidframework/aqueduct";
 import { FluidSudoku } from "./fluidSudoku";
+import { FluidMonopoly } from "./fluidMonopoly";
 
 /**
  * This does setup for the Container. The ContainerRuntimeFactoryWithDefaultDataStore also enables dynamic loading in the
@@ -17,4 +18,9 @@ import { FluidSudoku } from "./fluidSudoku";
 export const SudokuContainer = new ContainerRuntimeFactoryWithDefaultDataStore(
     FluidSudoku.getFactory(),
     new Map([[FluidSudoku.ObjectIdentifier, Promise.resolve(FluidSudoku.getFactory())]])
+);
+
+export const MonopolyContainer = new ContainerRuntimeFactoryWithDefaultDataStore(
+    FluidMonopoly.getFactory(),
+    new Map([[FluidMonopoly.ObjectIdentifier, Promise.resolve(FluidMonopoly.getFactory())]])
 );
