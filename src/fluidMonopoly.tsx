@@ -12,6 +12,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { MonopolyView}  from "../src/react/monopolyView";
 import '../src/view/index.css';
+
 //import App from './App';
 //import * as serviceWorker from '../src/view/serviceWorker';
 //import {Board} from "../src/model/board";
@@ -43,11 +44,15 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
 
     private readonly monopolyMapKey = "monopoly-map";
     private readonly presenceMapKey = "clientPresence";
+    private readonly clientPlayerKey = "player-map";
     private readonly boardMapKey = "boardMap";
+    private readonly locKey = "loc-map";
 
     private domElement: HTMLElement | undefined;
     private clientPresence: ISharedMap | undefined;
     private boardMap: ISharedMap | undefined;
+    private clientPlayerMap: ISharedMap | undefined;
+    private playerLocMap: ISharedMap | undefined;
 
     /**
      * ComponentInitializingFirstTime is where you do setup for your component. This is only called once the first time
@@ -58,14 +63,27 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         // Create a new map for our Sudoku data
         const map = SharedMap.create(this.runtime);
         const boardMap = SharedMap.create(this.runtime);
+        const player_ = SharedMap.create(this.runtime);
+        const loc =  SharedMap.create(this.runtime);
 
         // Store the new map under the sudokuMapKey key in the root SharedDirectory
         this.root.set(this.monopolyMapKey, map.handle);
         this.root.set(this.boardMapKey, boardMap.handle);
+        this.root.set(this.clientPlayerKey, player_.handle);
+        this.root.set(this.locKey, loc.handle);
 
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
         this.root.set(this.presenceMapKey, clientPresence.handle);
+
+        // console.log("Check player Map");
+        // console.log(this.clientPlayerMap);
+        // console.log("Is that object defined?");
+
+        // console.log("Check boardMap:");
+        // console.log(this.boardMap);
+
+        
     }
 
     /**
@@ -83,7 +101,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         // this.solution = await this.root.get<IFluidHandle<ISharedMap>>(this.solMapKey).get();
         // this.colorMap = await this.root.get<IFluidHandle<ISharedMap>>(this.colorMapKey).get();
         // this.counter = await this.root.get<IFluidHandle<ISharedMap>>(this.counterKey).get();
-        // this.clientScoreMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientScoreKey).get();
+        // this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientScoreKey).get();
 
         // Since we're using a Fluid distributed data structure to store our Sudoku data, we need to render whenever a
         // value in our map changes. Recall that distributed data structures can be changed by both local and remote
@@ -93,6 +111,8 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         // });
 
         this.boardMap = await this.root.get<IFluidHandle<ISharedMap>>(this.boardMapKey).get();
+        this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientPlayerKey).get();
+        this.playerLocMap = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
         
         this.clientPresence = await this.root
             .get<IFluidHandle<ISharedMap>>(this.presenceMapKey)
@@ -115,6 +135,8 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
                         clientId={this.runtime.clientId ?? "not connected"}
                         playerName = ""
                         boardMap={this.boardMap}
+                        clientPlayerMap={this.clientPlayerMap}
+                        playerLocMap={this.playerLocMap}
                     />
                     
                 );
@@ -134,3 +156,15 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
 //    }
 // }
 // export default Index;
+
+var constColorMap = new Map([
+    [1, "green"],
+    [2, "red"],
+    [3, "yellow"]
+]);
+
+export function getColor(input: number): string{
+
+    return constColorMap.get(input);
+}
+
