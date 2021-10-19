@@ -47,7 +47,10 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
     private readonly clientPlayerKey = "player-map";
     private readonly boardMapKey = "boardMap";
     private readonly locKey = "loc-map";
+    private readonly playerNameKey = "pl-name-map";
+    
 
+    private playerNameMap: ISharedMap | undefined;;
     private domElement: HTMLElement | undefined;
     private clientPresence: ISharedMap | undefined;
     private boardMap: ISharedMap | undefined;
@@ -65,12 +68,14 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         const boardMap = SharedMap.create(this.runtime);
         const player_ = SharedMap.create(this.runtime);
         const loc =  SharedMap.create(this.runtime);
+        const name_ = SharedMap.create(this.runtime);
 
         // Store the new map under the sudokuMapKey key in the root SharedDirectory
         this.root.set(this.monopolyMapKey, map.handle);
         this.root.set(this.boardMapKey, boardMap.handle);
         this.root.set(this.clientPlayerKey, player_.handle);
         this.root.set(this.locKey, loc.handle);
+        this.root.set(this.playerNameKey, name_.handle);
 
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
@@ -113,6 +118,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.boardMap = await this.root.get<IFluidHandle<ISharedMap>>(this.boardMapKey).get();
         this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientPlayerKey).get();
         this.playerLocMap = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
+        this.playerNameMap = await this.root.get<IFluidHandle<ISharedMap>>(this.playerNameKey).get();
         
         this.clientPresence = await this.root
             .get<IFluidHandle<ISharedMap>>(this.presenceMapKey)
@@ -133,7 +139,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
                     <MonopolyView
                         clientPresence={this.clientPresence}
                         clientId={this.runtime.clientId ?? "not connected"}
-                        playerName = ""
+                        playerNameMap = {this.playerNameMap}
                         boardMap={this.boardMap}
                         clientPlayerMap={this.clientPlayerMap}
                         playerLocMap={this.playerLocMap}

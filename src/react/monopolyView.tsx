@@ -20,7 +20,7 @@ import {Player} from "../model/player"
 export interface IMonopolyViewProps {
     clientId: string;
     clientPresence?: ISharedMap;
-    playerName: String;
+    playerNameMap: ISharedMap;
     boardMap: ISharedMap;
     clientPlayerMap: ISharedMap;
     playerLocMap: ISharedMap;
@@ -35,18 +35,21 @@ export function get_props()
     return props_global;
 }
 
-export var playerNameList;
-export function get_keys()
-{
-    console.log("returning keys");
-    return playerNameList;
-}
+// export var playerNameList;
+// export function get_keys()
+// {
+//     console.log("returning keys");
+//     return playerNameList;
+// }
 
 export function setPlayerName(props: IMonopolyViewProps){
 
     var playerName = window.prompt('Enter your user name')
+    props.playerNameMap.set((props.playerNameMap.size + 1) + "", playerName);
     props.clientPlayerMap.set(playerName, new Player(playerName)); 
-    playerNameList.push(playerName);  
+    console.log("Let's see what is set");
+    console.log(props.clientPlayerMap.get(playerName));
+    //playerNameList.push(playerName);  
     //console.log(props.clientPlayerMap.size);   
     
 }

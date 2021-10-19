@@ -14,4 +14,16 @@ export class Player {
         this.money = 10000;
         // status if required
     }
+
+    changeScore(ind){
+        if (ind==1){
+            this.money+=1035;
+        }
+        if (ind==2){
+            this.money-=1035;
+        }
+        if (ind==3){
+            this.money-=100;
+        }
+    }
 }
