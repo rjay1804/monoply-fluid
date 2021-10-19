@@ -8,7 +8,7 @@ function App() {
     <React.Fragment>
       <CssBaseline />
 
-      <GameBoard />
+      <GameBoard/>
     </React.Fragment>
   );
 }

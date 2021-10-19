@@ -13,7 +13,7 @@ export class Board {
     placeNames: Array<String>
     board: Array<Cell>
     dice: Dice
-    players: Player
+    players: Array<Player>
 
     constructor() {
         this.colours = ["red", "yellow", "blue", "green"]
@@ -35,7 +35,9 @@ export class Board {
     setProps(props: IMonopolyViewProps){
         for (var i = 1; i < 41; i++) {
             props.boardMap.set(i + "", this.board[i]);
+            //console.log(props.boardMap.get(i + ""));
         }
+
     }
 
     setSpecialCells() {
