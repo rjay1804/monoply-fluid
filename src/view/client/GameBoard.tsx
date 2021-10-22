@@ -72,7 +72,7 @@ export default function GameBoard() {
             </td>
             <td>
             {playerNames.map(name__ => (  
-                <tr>{props.clientPlayerMap.get(name__).money}</tr>
+                <tr>{props.clientPlayerMap.get(name__)}</tr>
                 ))}
             </td>
             </tr>
