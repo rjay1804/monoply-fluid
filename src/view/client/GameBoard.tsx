@@ -127,19 +127,17 @@ export default function GameBoard() {
   props_g = props;
   var size_ = props.playerNameMap.size;
   size_g = size_;
-  console.log("Size: ");
+  console.log("Size inside game board: ");
   console.log(size_);
-  console.log("Hack size");
-  size_-=1;
   //var key_list = get_keys();
-  console.log(props);
-  console.log(props.playerNameMap);
-  console.log("All names");
+  // console.log(props);
+  //console.log("See the props playerNames before setting array");
+  // console.log(props.playerNameMap);
+  // console.log("All names");
   // var keys_ = props.playerNameMap.keys()
   // console.log(keys_);
   // console.log(playerNames);
   var playerNames = new Array<String>();
-  console.log("img_loading...");
   var idx = 0;
   for(idx = 0; idx <size_; idx++){
     //console.log("hey");
@@ -173,16 +171,16 @@ export default function GameBoard() {
           
         <div className="center-square square">
            <div className="center-txt">  
-           <table border = "1">
+           <table >
           <tbody>
-            <tr border = "1">
+            <tr>
               <th> Player Name </th>
               <th> Cash Available </th>
               </tr >
               
               
               
-              <tr border = "1">
+              <tr >
             <td>
              {playerNames.map(name__ => (  
                 <tr>{name__}</tr>
