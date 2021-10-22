@@ -5,6 +5,7 @@ import  "./tab.css";
 
 import React from "react";
 import styled from "styled-components";
+import { Hidden, useIsFocusVisible } from "@material-ui/core";
 
 const Icon = (props) => {
   const { src } = props;
@@ -84,6 +85,7 @@ function clickMe() {
   
   var chance  = props_g.whoseTurn.get("dice");
   props_g.whoseTurn.set("dice", !chance);
+  props_g.whoseTurn.set("dice_char", diceChar)
   
 }
 
@@ -119,6 +121,19 @@ function set_image(idx)
 }
 
 
+function get_vis(props, name)
+{
+  var just_played = props.whoseTurn.get("whoseturn") - 1;
+  if (just_played == 0)
+  {
+    just_played = props.playerNameMap.size;
+  }
+  if(just_played!= props.clientPlayerMap.get(name).id)
+  {
+    return "hidden";
+  }
+  return "visible";
+}
 
 export default function GameBoard() {
   const num_squares: Array<number> = Array.from(Array(40));
@@ -155,7 +170,7 @@ export default function GameBoard() {
         
            <div className="center-txt">  
            
-           <span style={{fontSize: 50 }}>{diceChar}</span> 
+           <span style={{fontSize: 50 }}>{props.whoseTurn.get("dice_char")}</span> 
            <table >
            
           <tbody>
@@ -182,7 +197,7 @@ export default function GameBoard() {
                <div className="divTableCell">&nbsp; {name__}</div> 
                <div className="divTableCell">&nbsp; {props.clientPlayerMap.get(name__).money}</div>
                <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Roll</Button></div>
-               <div className="divTableCell">&nbsp;     <Icon src = {set_image(set_die_image)}></Icon></div>
+               <div className="divTableCell" style={{"fontSize": 50,    visibility: get_vis(props, name__)}}  >&nbsp;     {props.whoseTurn.get("dice_char")} </div>
               
                <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Buy</Button> &nbsp;   <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Pay rent </Button>  &nbsp;<Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Sell  </Button></div>
                </div>   
