@@ -10,16 +10,15 @@ const Icon = (props) => {
   const { src } = props;
 
   return (
-      <img src={src}  />
+      <img src={src} width="5%" height="5%" />
   );
 };
 
 var die = new Dice(6);
 var set_die_image = 2;
 var props_g;
-var diceChar;
 var size_g;
-// var set_die_image_path = "../../images/Die_1.png";;
+var diceChar;
 
 const image_1 = require('../../images/Die_1.png');
 const image_2 = require('../../images/Die_2.png');
@@ -27,8 +26,6 @@ const image_3 = require('../../images/Die_3.png');
 const image_4 = require('../../images/Die_4.png');
 const image_5 = require('../../images/Die_5.png');
 const image_6 = require('../../images/Die_6.png');
-
-//var img_load;
 
 const theme = {
   blue: {
@@ -70,6 +67,7 @@ Button.defaultProps = {
 function clickMe() {
   alert("Rolling...");
   set_die_image = die.rollDice();
+  diceChar = String.fromCodePoint(0x267F+ set_die_image);
   console.log("Die roll:");
   console.log(set_die_image);
   alert(set_die_image);
@@ -83,15 +81,10 @@ function clickMe() {
   props_g.whoseTurn.set("whoseturn", next); 
   console.log("Number of players:", size_g);
   console.log("After move:", props_g.whoseTurn.get("whoseturn"));
-  diceChar = String.fromCodePoint(0x267F+ set_die_image);
-  //props, currentplayer
-  //Get new square
-  //Pass new square to change loc
-
-  //set_image(set_die_image);
-  //set_die_image_path = "../../images/Die_4.png";
-  this.render()
-
+  
+  var chance  = props_g.whoseTurn.get("dice");
+  props_g.whoseTurn.set("dice", !chance);
+  
 }
 
 function set_image(idx)
@@ -136,35 +129,16 @@ export default function GameBoard() {
   size_g = size_;
   console.log("Size inside game board: ");
   console.log(size_);
-  //var key_list = get_keys();
-  // console.log(props);
-  //console.log("See the props playerNames before setting array");
-  // console.log(props.playerNameMap);
-  // console.log("All names");
-  // var keys_ = props.playerNameMap.keys()
-  // console.log(keys_);
-  // console.log(playerNames);
   var playerNames = new Array<String>();
   var idx = 0;
   for(idx = 0; idx <size_; idx++){
-    //console.log("hey");
+
     console.log(props.playerNameMap.get(idx + ""));
-    //console.log(idx + "");
     playerNames.push(props.playerNameMap.get(idx + ""));
   }
 
   console.log("these are the player names");
   console.log(playerNames);
-  //console.log(props.clientPlayerMap.get(playerNames[0]));
-  // for(idx = 1; idx <size_; idx++){
-  //   //console.log("hey");
-  //   console.log(props.clientPlayerMap.get(playerNames[idx]).changeScore(idx));
-  // }
-
-  //var die = 1;
-  //var path_ = "C:\\Users\\hrangarajan\\Desktop\\Work\\Hackathon\\monopoly-fluid\\src\\images\\Die_1.png";
-
-  //console.log(key_list);
   return (
     <React.Fragment> 
       <div className="board">
@@ -175,16 +149,23 @@ export default function GameBoard() {
             key={id}
           />)
         })}
-          
+           
+
         <div className="center-square square">
+        
            <div className="center-txt">  
+           
+           <span style={{fontSize: 50 }}>{diceChar}</span> 
            <table >
+           
           <tbody>
+         
             <tr>
             <div className="divTable">
                <div className="divTableBody">
-               <div className="divTableRow">
-               <div className="divTableCell">&nbsp; Player Name</div> <div className="divTableCell">&nbsp; Cash Available </div>
+               <div className="divTableRow" style={{"color": "black", "backgroundColor": "cyan", width: 100, height: 10}}>
+               <div className="divTableCell">&nbsp; Player</div> <div className="divTableCell">&nbsp; Cash  </div> <div className="divTableCell">&nbsp; Roll Dice </div>
+               <div className="divTableCell">&nbsp; Take Action </div>
                </div>
                </div>
                </div>
@@ -197,30 +178,37 @@ export default function GameBoard() {
              {playerNames.map(name__ => (  
                <div className="divTable">
                <div className="divTableBody">
-               <div className="divTableRow">
-               <div className="divTableCell">&nbsp; {name__}</div> <div className="divTableCell">&nbsp; {props.clientPlayerMap.get(name__).money}</div>
-               </div>
+               <div className="divTableRow" style={{"color": "black", "backgroundColor": props.clientPlayerMap.get(name__).colour}}>
+               <div className="divTableCell">&nbsp; {name__}</div> 
+               <div className="divTableCell">&nbsp; {props.clientPlayerMap.get(name__).money}</div>
+               <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Roll</Button></div>
+               <div className="divTableCell">&nbsp;     <Icon src = {set_image(set_die_image)}></Icon></div>
+              
+               <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Buy</Button> &nbsp;   <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Pay rent </Button>  &nbsp;<Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Sell  </Button></div>
+               </div>   
                </div>
                </div>
                 ))}  
-              
-              {/* <td>Ashish</td>
-              <td>Vineet</td> */}
             </td>
 
             </tr>
+
+            <td>
+            <tr>
+
+            </tr>
+            </td>
+
             </tbody>
           </table >
             <div>
-              <Button onClick={clickMe}>Roll</Button>
-              {/* <span style={{fontSize: 50 }}>{diceChar}</span> */}
+             
+               
             </div>
-            <Icon src={set_image(set_die_image)} />
+            
             
 
             <a href="https://fluidframework.com/docs/">Powered by Fluid</a>
-           
-            {/* <img src="https://imgsv.imaging.nikon.com/lineup/dslr/df/img/sample/img_02_l.jpg"> </img> */}
            </div>
         </div> 
       </div>
@@ -229,18 +217,5 @@ export default function GameBoard() {
     
   );
 }
-
-
-
-// this.map.forEach((value: string, key: string) => {
-//   console.log(key, value);
-// });
-
-
-// {playerNames.map(name => (  
-//   <li>  
-//     {name}  
-//   </li>  
-// ))}  
 
 

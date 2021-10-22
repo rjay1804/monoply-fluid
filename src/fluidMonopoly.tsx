@@ -16,12 +16,7 @@ import '../src/view/index.css';
 import {Player} from "../src/model/player";
 import { SquareType } from "../src/view/client/SquareType";
 import { BoardSection } from "../src/view/client/BoardSection";
-//import { SquareConfigData_ } from "../src/view/client/SquareData";
 
-
-//import App from './App';
-//import * as serviceWorker from '../src/view/serviceWorker';
-//import {Board} from "../src/model/board";
 
 /**
  * A collaborative Sudoku component built on the Fluid Framework.
@@ -95,13 +90,8 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         
         this.whoseTurn.set("whoseturn", 1);
         this.whoseTurn.set("number of current players", 0);
+        this.whoseTurn.set("dice", false);
 
-        // console.log("Check player Map");
-        // console.log(this.clientPlayerMap);
-        // console.log("Is that object defined?");
-
-        // console.log("Check boardMap:");
-        // console.log(this.boardMap);
 
         
     }
@@ -110,25 +100,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
      * This method will be called whenever the component has initialized, be it the first time or subsequent times.
      */
      protected async hasInitialized() {
-        // Shared objects that are stored within other Shared objects (e.g. a SharedMap within the root, which is a
-        // SharedDirectory) must be retrieved asynchronously. We do that here, in this async function, then store a
-        // local reference to the object so we can easily use it in synchronous code.
-        //
-        // Our "puzzle" SharedMap is stored as a handle on the "root" SharedDirectory. To get it we must make a
-        // synchronous call to get the IFluidHandle, then an asynchronous call to get the ISharedMap from the
-        // handle.
-        // this.puzzle = await this.root.get<IFluidHandle<ISharedMap>>(this.sudokuMapKey).get();
-        // this.solution = await this.root.get<IFluidHandle<ISharedMap>>(this.solMapKey).get();
-        // this.colorMap = await this.root.get<IFluidHandle<ISharedMap>>(this.colorMapKey).get();
-        // this.counter = await this.root.get<IFluidHandle<ISharedMap>>(this.counterKey).get();
-        // this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientScoreKey).get();
 
-        // Since we're using a Fluid distributed data structure to store our Sudoku data, we need to render whenever a
-        // value in our map changes. Recall that distributed data structures can be changed by both local and remote
-        // clients, so if we don't call render here, then our UI will not update when remote clients change data.
-        // this.puzzle.on("valueChanged", (changed, local, op) => {
-        //     this.render();
-        // });
 
         this.boardMap = await this.root.get<IFluidHandle<ISharedMap>>(this.boardMapKey).get();
         this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientPlayerKey).get();
@@ -182,17 +154,6 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
     }
 }
 
-// var perf =require('./template.html');
-
-// class Index extends React.Component {
-//    render(){
-//       return (
-//          <iframe src={perf }></iframe>   /* like this */
-//       );
-//    }
-// }
-// export default Index;
-
 var constColorMap = new Map([
     [1, "green"],
     [2, "red"],
@@ -203,6 +164,10 @@ export function getColor(input: number): string{
 
     return constColorMap.get(input);
 }
+
+
+var twelve_color_array = ["#0048BA", "#D3212D", "#7FFFD4", "#F4C2C2", "#BFFF00", "#54626F", "#AF6E4D",
+                            "#FFF600", "#800020", "#ACE1AF", "#F7E7CE", "#AA381E", "#B9D9EB"]
 
 export function setPlayerName(playerNameMap: ISharedMap, clientPlayerMap:ISharedMap, SquareConfigData: ISharedMap, whoseTurn: ISharedMap){
 
@@ -218,7 +183,8 @@ export function setPlayerName(playerNameMap: ISharedMap, clientPlayerMap:IShared
         console.log("key_idx:", idx);
         playerNameMap.set(idx + "", playerName);
         whoseTurn.set("number of current players", whoseTurn.get("number of current players") + 1);
-        clientPlayerMap.set(playerName, new Player(playerName)); 
+        var colour = twelve_color_array[whoseTurn.get("number of current players") % 12];
+        clientPlayerMap.set(playerName, new Player(playerName, colour, whoseTurn.get("number of current players"))); 
         console.log("Let's see what is set");
         console.log(clientPlayerMap.get(playerName));
 
@@ -282,6 +248,9 @@ export function setPlayerName(playerNameMap: ISharedMap, clientPlayerMap:IShared
         console.log(SquareConfigData.get(3 + ""));
         console.log("End");
         console.log("Size after new input:", playerNameMap.size);
+
+
+
     }
     
 }

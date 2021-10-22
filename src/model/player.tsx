@@ -9,12 +9,14 @@ export class Player {
     money: number;
     loc: SquareConfigData;
 
-    constructor(_name) {
+    constructor(_name, _colour, _id) {
 //        this.id = new randomUUID;
         this.name = _name;
-        //this.colour = color;
         this.money = 10000;
         this.loc = SquareConfigData.get(0);
+        this.colour = _colour;
+        console.log("Colour", this.colour);
+        this.id = _id;
         // status if required
     }
 
@@ -34,4 +36,5 @@ export class Player {
     {
         this.loc = new_square;
     }
+
 }
