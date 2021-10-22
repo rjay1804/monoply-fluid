@@ -1,6 +1,8 @@
 // import { randomUUID } from "crypto";
 // import { SquareType } from "../view/client/SquareType";
 // import { BoardSection } from "../view/client/BoardSection";
+// import { get_props } from "../react/monopolyView";
+// import { ISharedMap } from "@fluidframework/map";
 import { SquareConfigData } from "../view/client/SquareData";
 
 export class Cell {
@@ -18,6 +20,7 @@ export class Cell {
         this.type = type;
         this.name = name;
         this.index = index
+        //var props = get_props()
         this.SquareConData = SquareConfigData.get(index);
 
         //this.id = new randomUUID;

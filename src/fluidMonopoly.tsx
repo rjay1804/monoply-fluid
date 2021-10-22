@@ -11,7 +11,10 @@ import React from "react";
 //import React from "react";
 import ReactDOM from "react-dom";
 import { MonopolyView}  from "../src/react/monopolyView";
+
 import '../src/view/index.css';
+//import { SquareConfigData_ } from "../src/view/client/SquareData";
+
 
 //import App from './App';
 //import * as serviceWorker from '../src/view/serviceWorker';
@@ -48,6 +51,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
     private readonly boardMapKey = "boardMap";
     private readonly locKey = "loc-map";
     private readonly playerNameKey = "pl-name-map";
+    private readonly whoseTurnKey = "turn-map";
     
 
     private playerNameMap: ISharedMap | undefined;;
@@ -55,7 +59,8 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
     private clientPresence: ISharedMap | undefined;
     private boardMap: ISharedMap | undefined;
     private clientPlayerMap: ISharedMap | undefined;
-    private playerLocMap: ISharedMap | undefined;
+    private SquareConfigData: ISharedMap | undefined;
+    private whoseTurn: ISharedMap | undefined;
 
     /**
      * ComponentInitializingFirstTime is where you do setup for your component. This is only called once the first time
@@ -69,6 +74,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         const player_ = SharedMap.create(this.runtime);
         const loc =  SharedMap.create(this.runtime);
         const name_ = SharedMap.create(this.runtime);
+        const turn_ = SharedMap.create(this.runtime);
 
         // Store the new map under the sudokuMapKey key in the root SharedDirectory
         this.root.set(this.monopolyMapKey, map.handle);
@@ -76,6 +82,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.root.set(this.clientPlayerKey, player_.handle);
         this.root.set(this.locKey, loc.handle);
         this.root.set(this.playerNameKey, name_.handle);
+        this.root.set(this.whoseTurnKey, turn_.handle);
 
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
@@ -117,8 +124,12 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
 
         this.boardMap = await this.root.get<IFluidHandle<ISharedMap>>(this.boardMapKey).get();
         this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientPlayerKey).get();
-        this.playerLocMap = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
+        this.SquareConfigData = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
         this.playerNameMap = await this.root.get<IFluidHandle<ISharedMap>>(this.playerNameKey).get();
+        this.whoseTurn = await this.root.get<IFluidHandle<ISharedMap>>(this.playerNameKey).get();
+
+
+        this.whoseTurn.set("whoseturn", 1);
         
         this.clientPresence = await this.root
             .get<IFluidHandle<ISharedMap>>(this.presenceMapKey)
@@ -142,7 +153,8 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
                         playerNameMap = {this.playerNameMap}
                         boardMap={this.boardMap}
                         clientPlayerMap={this.clientPlayerMap}
-                        playerLocMap={this.playerLocMap}
+                        SquareConfigData={this.SquareConfigData}
+                        whoseTurn={this.whoseTurn}
                     />
                     
                 );
