@@ -1,6 +1,7 @@
 import { GameSquare } from "./GameSquare";
 import { get_props } from "../../react/monopolyView";
 import {Dice} from "../../model/Dice";
+import  "./tab.css";
 
 import React from "react";
 import styled from "styled-components";
@@ -34,7 +35,6 @@ const theme = {
     hover: "#ad1457"
   }
 };
-
 
 
 
@@ -174,8 +174,13 @@ export default function GameBoard() {
            <table >
           <tbody>
             <tr>
-              <th> Player Name </th>
-              <th> Cash Available </th>
+            <div className="divTable">
+               <div className="divTableBody">
+               <div className="divTableRow">
+               <div className="divTableCell">&nbsp; Player Name</div> <div className="divTableCell">&nbsp; Cash Available </div>
+               </div>
+               </div>
+               </div>
               </tr >
               
               
@@ -183,17 +188,19 @@ export default function GameBoard() {
               <tr >
             <td>
              {playerNames.map(name__ => (  
-                <tr>{name__}</tr>
+               <div className="divTable">
+               <div className="divTableBody">
+               <div className="divTableRow">
+               <div className="divTableCell">&nbsp; {name__}</div> <div className="divTableCell">&nbsp; {props.clientPlayerMap.get(name__).money}</div>
+               </div>
+               </div>
+               </div>
                 ))}  
               
               {/* <td>Ashish</td>
               <td>Vineet</td> */}
             </td>
-            <td>
-            {playerNames.map(name__ => (  
-                <tr>{props.clientPlayerMap.get(name__).money}</tr>
-                ))}
-            </td>
+
             </tr>
             </tbody>
           </table >
