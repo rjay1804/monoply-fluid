@@ -91,7 +91,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.whoseTurn.set("whoseturn", 1);
         this.whoseTurn.set("number of current players", 0);
         this.whoseTurn.set("dice", false);
-        this.whoseTurn.set("dice_char", "value");
+        this.whoseTurn.set("dice_char", "");
 
 
         

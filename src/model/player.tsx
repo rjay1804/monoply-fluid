@@ -1,5 +1,5 @@
 //const { randomUUID } = require("crypto");
-import { SquareConfigData } from "../view/client/SquareData";
+import { NyThemeData } from "../view/client/NyTheme";
 
 export class Player {
     
@@ -7,13 +7,13 @@ export class Player {
     name: string;
     colour: string;
     money: number;
-    loc: SquareConfigData;
+    loc: number ;
 
     constructor(_name, _colour, _id) {
 //        this.id = new randomUUID;
         this.name = _name;
         this.money = 10000;
-        this.loc = SquareConfigData.get(0);
+        this.loc = 5;
         this.colour = _colour;
         console.log("Colour", this.colour);
         this.id = _id;
@@ -32,9 +32,18 @@ export class Player {
         }
     }
 
-    changeLoc(new_square: SquareConfigData)
+    changeLoc(new_loc: number)
     {
-        this.loc = new_square;
+        this.loc = new_loc;
+    }
+
+    Buy()
+    {
+        var cost = NyThemeData.get(this.loc).price;
+        console.log("Cost:", cost);
+        console.log("Money before buying", this.money);
+        this.money-=cost;
+        console.log("Money after buying", this.money);
     }
 
 }

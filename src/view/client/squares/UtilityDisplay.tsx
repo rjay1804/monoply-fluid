@@ -12,6 +12,7 @@ export const UtilityDisplay: React.FC<Props> = ({ id }) => {
 
     const txt: string | undefined = NyThemeData.get(id)?.name;
     const icon: string | undefined = NyThemeData.get(id)?.icon;
+    const price: number | undefined = NyThemeData.get(id)?.price;
 
 
     const getSubwayCompany = () => {
@@ -20,7 +21,7 @@ export const UtilityDisplay: React.FC<Props> = ({ id }) => {
             <div className="icon">
                 <FontAwesomeIcon icon={faSubway} size="3x" color="blue" />
             </div>
-            <div className="square-name"> {txt}</div>
+            <div className="square-name"> {txt} <br></br><b> {price}</b> </div>
         </React.Fragment>);
     };
 
@@ -30,7 +31,7 @@ export const UtilityDisplay: React.FC<Props> = ({ id }) => {
             <div className="icon">
                 <FontAwesomeIcon icon={faLightbulb} size="3x" color="blue" />
             </div>
-            <div className="square-name"> {txt}</div>
+            <div className="square-name"> {txt} <br></br><b> {price}</b> </div>
         </React.Fragment>);
     };
 
