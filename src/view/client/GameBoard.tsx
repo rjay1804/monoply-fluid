@@ -5,23 +5,28 @@ import  "./tab.css";
 
 import React from "react";
 import styled from "styled-components";
-//mport { Avatar } from "@material-ui/core";
-//import { Avatar } from 'react-native-paper'; 
-//const MyComponent = () => ( <Avatar src={require('../../images/Die_4.png')} /> );
+
+const Icon = (props) => {
+  const { src } = props;
+
+  return (
+      <img src={src}  />
+  );
+};
 
 var die = new Dice(6);
-var set_die_image = 0;
+var set_die_image = 2;
 var props_g;
 var diceChar;
 var size_g;
 // var set_die_image_path = "../../images/Die_1.png";;
 
-// const image_1 = require('../../images/Die_1.png');
-// const image_2 = require('../../images/Die_2.png');
-// const image_3 = require('../../images/Die_3.png');
-// const image_4 = require('../../images/Die_4.png');
-// const image_5 = require('../../images/Die_5.png');
-// const image_6 = require('../../images/Die_6.png');
+const image_1 = require('../../images/Die_1.png');
+const image_2 = require('../../images/Die_2.png');
+const image_3 = require('../../images/Die_3.png');
+const image_4 = require('../../images/Die_4.png');
+const image_5 = require('../../images/Die_5.png');
+const image_6 = require('../../images/Die_6.png');
 
 //var img_load;
 
@@ -85,38 +90,40 @@ function clickMe() {
 
   //set_image(set_die_image);
   //set_die_image_path = "../../images/Die_4.png";
+  this.render()
 
 }
 
-// function set_image(idx)
-// {
-//   if (idx == 1)
-//   {
-//     return image_1;
-//   }
-//   if (idx == 2)
-//   {
-//     img_load =  image_2;
-//   }
-//   if (idx == 3)
-//   {
-//     img_load =  image_3;
-//   }
-//   if (idx == 4)
-//   {
-//     img_load = image_4;
-//   }
-//   if (idx == 5)
-//   {
-//     img_load =  image_5;
-//   }
-//   if (idx == 6)
-//   {
-//     img_load =  image_6;
-//   }
-//   console.log(img_load);
-//   console.log(idx);
-// }
+function set_image(idx)
+{
+  console.log("Inside sett_image");
+  console.log(idx);
+  if (idx == 1)
+  {
+    return image_1;
+  }
+  if (idx == 2)
+  {
+    return image_2;
+  }
+  if (idx == 3)
+  {
+    return image_3;
+  }
+  if (idx == 4)
+  {
+    return image_4;
+  }
+  if (idx == 5)
+  {
+    return image_5;
+  }
+  if (idx == 6)
+  {
+    return image_6;
+  }
+  
+}
 
 
 
@@ -206,10 +213,9 @@ export default function GameBoard() {
           </table >
             <div>
               <Button onClick={clickMe}>Roll</Button>
-              <span style={{fontSize: 50 }}>{diceChar}</span>
+              {/* <span style={{fontSize: 50 }}>{diceChar}</span> */}
             </div>
-              
-            
+            <Icon src={set_image(set_die_image)} />
             
 
             <a href="https://fluidframework.com/docs/">Powered by Fluid</a>
@@ -223,6 +229,7 @@ export default function GameBoard() {
     
   );
 }
+
 
 
 // this.map.forEach((value: string, key: string) => {

@@ -144,6 +144,10 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.clientPlayerMap.on("valueChanged", (changed, local, op) => {
             this.render();
         });
+
+        this.whoseTurn.on("valueChanged", (changed, local, op) => {
+            this.render();
+        });
         
         this.clientPresence = await this.root
             .get<IFluidHandle<ISharedMap>>(this.presenceMapKey)
