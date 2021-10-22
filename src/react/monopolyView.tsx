@@ -53,7 +53,8 @@ export function get_props()
 export function setPlayerName(props: IMonopolyViewProps){
 
     var playerName = window.prompt('Enter your user name')
-    props.playerNameMap.set((props.playerNameMap.size + 1) + "", playerName);
+
+    props.playerNameMap.set(props.playerNameMap.size - 1 + "", playerName);
     props.clientPlayerMap.set(playerName, new Player(playerName)); 
     console.log("Let's see what is set");
     console.log(props.clientPlayerMap.get(playerName));
@@ -117,6 +118,7 @@ export function setPlayerName(props: IMonopolyViewProps){
     console.log("Squareee");   
     console.log(props.SquareConfigData.get(3 + ""));
     console.log("End");
+    console.log("Sizeee:", props.playerNameMap.size);
 
     
 }

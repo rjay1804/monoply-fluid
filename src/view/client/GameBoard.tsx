@@ -129,6 +129,8 @@ export default function GameBoard() {
   size_g = size_;
   console.log("Size: ");
   console.log(size_);
+  console.log("Hack size");
+  size_-=1;
   //var key_list = get_keys();
   console.log(props);
   console.log(props.playerNameMap);
@@ -141,12 +143,14 @@ export default function GameBoard() {
   var idx = 0;
   for(idx = 0; idx <size_; idx++){
     //console.log("hey");
-    console.log(props.playerNameMap.get((idx + 1) + ""));
+    console.log(props.playerNameMap.get(idx + ""));
     //console.log(idx + "");
-    playerNames.push(props.playerNameMap.get((idx + 1) + ""));
+    playerNames.push(props.playerNameMap.get(idx + ""));
   }
-  console.log(playerNames);
 
+  console.log("these are the player names");
+  console.log(playerNames);
+  //console.log(props.clientPlayerMap.get(playerNames[0]));
   // for(idx = 1; idx <size_; idx++){
   //   //console.log("hey");
   //   console.log(props.clientPlayerMap.get(playerNames[idx]).changeScore(idx));
@@ -166,17 +170,19 @@ export default function GameBoard() {
             key={id}
           />)
         })}
-
-          <table >
+          
+        <div className="center-square square">
+           <div className="center-txt">  
+           <table border = "1">
           <tbody>
-            <tr >
+            <tr border = "1">
               <th> Player Name </th>
               <th> Cash Available </th>
               </tr >
               
               
               
-              <tr >
+              <tr border = "1">
             <td>
              {playerNames.map(name__ => (  
                 <tr>{name__}</tr>
@@ -187,20 +193,16 @@ export default function GameBoard() {
             </td>
             <td>
             {playerNames.map(name__ => (  
-                <tr>{props.clientPlayerMap.get(name__)}</tr>
+                <tr>{props.clientPlayerMap.get(name__).money}</tr>
                 ))}
             </td>
             </tr>
             </tbody>
           </table >
-          
-        <div className="center-square square">
-           <div className="center-txt">  
-
-              {/* <Button onClick={clickMe}>Roll</Button>
+            <div>
+              <Button onClick={clickMe}>Roll</Button>
               <span style={{fontSize: 50 }}>{diceChar}</span>
-              
-              <img src= {require('../../images/Die_6.png')}/> */}
+            </div>
               
             
             
