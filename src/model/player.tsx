@@ -1,5 +1,6 @@
 //const { randomUUID } = require("crypto");
 import { NyThemeData } from "../view/client/NyTheme";
+import {SquareThemeData} from "../view/client/NyTheme"
 
 export class Player {
     
@@ -8,6 +9,7 @@ export class Player {
     colour: string;
     money: number;
     loc: number ;
+    properties: Array<SquareThemeData>
 
     constructor(_name, _colour, _id) {
 //        this.id = new randomUUID;
@@ -21,6 +23,8 @@ export class Player {
     }
 
     changeScore(ind){
+    
+    console.log("Inside change score");
         if (ind==1){
             this.money+=1035;
         }
@@ -39,11 +43,21 @@ export class Player {
 
     Buy()
     {
+        console.log("Calling Buy...")
         var cost = NyThemeData.get(this.loc).price;
         console.log("Cost:", cost);
         console.log("Money before buying", this.money);
         this.money-=cost;
         console.log("Money after buying", this.money);
+        this.properties.push(NyThemeData.get(this.loc));
+    }
+
+    Sell(loc)
+    {
+        var cost = NyThemeData.get(loc).price;
+        this.money+=cost;
+        console.log("Sold!");
+
     }
 
 }

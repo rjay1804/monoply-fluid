@@ -88,7 +88,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
 
         this.whoseTurn = await this.root.get<IFluidHandle<ISharedMap>>(this.whoseTurnKey).get();
         
-        this.whoseTurn.set("whoseturn", 1);
+        this.whoseTurn.set("whoseturn", 0);
         this.whoseTurn.set("number of current players", 0);
         this.whoseTurn.set("dice", false);
         this.whoseTurn.set("dice_char", "");
@@ -173,6 +173,9 @@ var twelve_color_array = ["#0048BA", "#D3212D", "#7FFFD4", "#F4C2C2", "#BFFF00",
 export function setPlayerName(playerNameMap: ISharedMap, clientPlayerMap:ISharedMap, SquareConfigData: ISharedMap, whoseTurn: ISharedMap){
 
     var playerName = window.prompt('Enter your user name')
+    var status =clientPlayerMap.get(playerName);
+    if(status==undefined)
+    {
     console.log("Current size of playerName map (before input): ", playerNameMap.size);
     if (playerName == undefined)
     {
@@ -183,9 +186,11 @@ export function setPlayerName(playerNameMap: ISharedMap, clientPlayerMap:IShared
         var idx = whoseTurn.get("number of current players");
         console.log("key_idx:", idx);
         playerNameMap.set(idx + "", playerName);
-        whoseTurn.set("number of current players", whoseTurn.get("number of current players") + 1);
-        var colour = twelve_color_array[whoseTurn.get("number of current players") % 12];
+
+        var colour = twelve_color_array[whoseTurn.get("number of current players") +3 % 12];
         clientPlayerMap.set(playerName, new Player(playerName, colour, whoseTurn.get("number of current players"))); 
+        whoseTurn.set("number of current players", whoseTurn.get("number of current players") + 1);
+
         console.log("Let's see what is set");
         console.log(clientPlayerMap.get(playerName));
 
@@ -250,7 +255,7 @@ export function setPlayerName(playerNameMap: ISharedMap, clientPlayerMap:IShared
         console.log("End");
         console.log("Size after new input:", playerNameMap.size);
 
-
+    }
 
     }
     

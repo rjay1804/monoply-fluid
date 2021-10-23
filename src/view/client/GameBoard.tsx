@@ -15,12 +15,35 @@ import styled from "styled-components";
 //   );
 // };
 
+{/* <Icon src={set_image(set_die_image)} /> */}
+
 var die = new Dice(6);
 var set_die_image = 2;
 var props_g;
 var size_g;
 var diceChar;
 
+function Get_Just_Played(){
+
+    var just_played = props_g.whoseTurn.get("whoseturn") - 1;
+    if (just_played == -1)
+    {
+      just_played = props_g.playerNameMap.size - 1;
+    }
+    return just_played;
+}
+
+function Buy_()
+{
+  var props_1 = props_g;
+  var just_played = Get_Just_Played();
+  var name = props_1.playerNameMap.get(just_played + "");
+
+  console.log("Get name", name);
+  console.log("Log Just Played", just_played);
+  console.log(props_1.playerNameMap.keys())
+  props_1.clientPlayerMap.get(name).Buy();
+}
 
 const theme = {
   blue: {
@@ -68,11 +91,7 @@ function clickMe() {
   alert(set_die_image);
   console.log("Intial: ", props_g.whoseTurn.get("whoseturn"));
   var current_turn = props_g.whoseTurn.get("whoseturn");
-  var next = (current_turn + 1) % (size_g + 1)
-  if(next == 0)
-  {
-    next+=1;
-  }
+  var next = (current_turn + 1) % (size_g)
   props_g.whoseTurn.set("whoseturn", next); 
   console.log("Number of players:", size_g);
   console.log("After move:", props_g.whoseTurn.get("whoseturn"));
@@ -83,18 +102,11 @@ function clickMe() {
   
 }
 
-function Buy_(props, name) {
-    
-    props.clientPlayerMap.get(name).Buy();
-}
+
 
 function get_vis(props, name)
 {
-  var just_played = props.whoseTurn.get("whoseturn") - 1;
-  if (just_played == 0)
-  {
-    just_played = props.playerNameMap.size;
-  }
+  var just_played = Get_Just_Played();
   if(just_played!= props.clientPlayerMap.get(name).id)
   {
     return "hidden";
@@ -107,7 +119,7 @@ export default function GameBoard() {
   
   var props = get_props();
   props_g = props;
-  var size_ = props.playerNameMap.size;
+  var size_ = props.whoseTurn.get("number of current players");
   size_g = size_;
   console.log("Size inside game board: ");
   console.log(size_);
@@ -165,7 +177,12 @@ export default function GameBoard() {
                <div className="divTableCell">&nbsp; {props.clientPlayerMap.get(name__).money}</div>
 
               
-               <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Buy_(props, name__)}>Buy</Button> &nbsp;   <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Pay rent </Button>  &nbsp;<Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Sell  </Button></div>
+               <div className="divTableCell">&nbsp; 
+               <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Buy_}>Buy</Button> &nbsp;
+              
+               <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Pay rent </Button>  &nbsp;
+               <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Sell  </Button>
+               </div>
                <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Roll</Button></div>
                <div className="divTableCell" style={{"fontSize": 50,    visibility: get_vis(props, name__)}}  >&nbsp;     {props.whoseTurn.get("dice_char")} </div>
                
@@ -189,6 +206,12 @@ export default function GameBoard() {
              
                
             </div>
+
+            <div className="center-square square">
+
+
+              
+              </div>
             
             
 
