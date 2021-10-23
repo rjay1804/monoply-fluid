@@ -62,13 +62,20 @@ function Buy_()
   var just_played = Get_Just_Played();
   var name = props_1.playerNameMap.get(just_played + "");
   var loc_name = props_1.playerLocMap.get(props_1.playerLocMap.get(name) + "-");
-  alert("Congratulations " + name + ", you purchased, " + loc_name);
+  
   //console.log("Get name", name);
   //console.log("Log Just Played", just_played);
   //console.log(props_1.playerNameMap.keys())
   //console.log(props_1.clientPlayerMap.get(name));
   //console.log("Nameeeeeeeeeeeeee", name);
-  props_1.clientPlayerMap.get(name).Buy(props_1);
+  var stat = props_1.clientPlayerMap.get(name).Buy(props_1);
+  if (stat == -1)
+  {
+    props_1.whoseTurn.set("utility", false);
+    change_turn();
+    return;
+  }
+  alert("Congratulations " + name + ", you purchased, " + loc_name);
   props_1.whoseTurn.set("utility", false);
   change_turn();
   
@@ -98,11 +105,14 @@ function Sell_1()
   //props_1.whoseTurn.set("trigger_render", !props_1.whoseTurn.get("trigger_render"));
 }
 
-function Sell_2()
+function Sell_2(price, name_of_prop)
 {
   console.log("Is this happening?");
-  //props_1.clientPlayerMap.get(name).Sell(5);
+  var just_played = Get_Just_Played();
+  var name = props_g.playerNameMap.get(just_played + "");
+  props_g.clientPlayerMap.get(name).Sell(price, name_of_prop);
   change_turn();
+  showInfo=false;
 }
 
 
@@ -239,10 +249,11 @@ export default function GameBoard() {
             <div className="divTable">
                <div className="divTableBody">
                <div className="divTableRow" style={{"color": "black", "backgroundColor": "cyan", width: 100, height: 10}}>
-               <div className="divTableCell">&nbsp; Player Name</div> <div className="divTableCell">&nbsp; Cash  </div> 
-               <div className="divTableCell">&nbsp; Player Location </div>
+               <div className="divTableCell">&nbsp; Name</div> <div className="divTableCell">&nbsp; Cash  </div> 
+               
                <div className="divTableCell">&nbsp; Take Action </div>  
                <div className="divTableCell">&nbsp; Roll Dice </div>
+               <div className="divTableCell">&nbsp; Player Location </div>
                
                </div>
                </div>
@@ -260,7 +271,7 @@ export default function GameBoard() {
                <div className="divTableCell">&nbsp; {name__}</div> 
                <div className="divTableCell">&nbsp; {props.playerMoneyMap.get(name__)}</div>
 
-               <div className="divTableCell">&nbsp; {props.playerLocMap.get(props.playerLocMap.get(name__) + "-")}</div> 
+               
 
                <div className="divTableCell">&nbsp; 
                <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Buy_}>Buy</Button> &nbsp;
@@ -272,6 +283,7 @@ export default function GameBoard() {
                onClick={clickMe}>Roll</Button></div>
 
                <div className="divTableCell" style={{"fontSize": 50,    visibility: get_vis(props, name__)}}  >&nbsp;     {props.whoseTurn.get("dice_char")} </div>
+               <div className="divTableCell">&nbsp; {props.playerLocMap.get(props.playerLocMap.get(name__) + "-")}</div> 
                
                </div>   
                </div>
@@ -297,7 +309,7 @@ export default function GameBoard() {
               {props_g.playerNameMap.get(Get_Just_Played() + "")}, these are your properties:
             {properties.map(name_prop => (
               
-             <div >&nbsp; {name_prop.name} <Button onClick={Sell_2()}>Sell  </Button> <br></br> </div> 
+             <div >&nbsp; {name_prop.name} <Button onClick={()=>Sell_2(name_prop.price, name_prop.name)}>Sell  </Button> <br></br> </div> 
             ))}
 
             </div>

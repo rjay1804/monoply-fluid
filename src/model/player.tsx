@@ -56,6 +56,18 @@ export class Player {
     {
         //console.log("Calling Buy...")
         var props = get_props();
+        var place_name = NyThemeData.get(props.playerLocMap.get(this.name)).name;
+        if (place_name == "Chance"){
+            alert(
+                "You can't Buy Chance; You won 100 Rs though!"
+            );
+            this.money = props.playerMoneyMap.get(this.name);
+            this.money+=100;
+    
+            
+            props.playerMoneyMap.set(this.name, this.money);
+            return -1;
+        }
         var cost = NyThemeData.get(props.playerLocMap.get(this.name)).price;
         //console.log("Cost:", cost);
         //console.log("Money before buying", this.money);
@@ -73,17 +85,31 @@ export class Player {
         this.properties.push(NyThemeData.get(props.playerLocMap.get(this.name)));
     }
 
-    Sell(loc)
+    Sell(cost, name_of_prop)
     {
         //console.log("Before:", this.properties);
+
         var props = get_props();
-        var place = NyThemeData.get(loc);
-        var cost = place.price;
+        var place_name = NyThemeData.get(props.playerLocMap.get(this.name)).name;
+        if (place_name == "Chance"){
+            alert(
+                "You can't sell, while at Chance; You won 100 Rs though!"
+            );
+            this.money = props.playerMoneyMap.get(this.name);
+            this.money+=100;
+    
+            
+            props.playerMoneyMap.set(this.name, this.money);
+            return -1;
+        }
         this.money = props.playerMoneyMap.get(this.name);
         this.money+=cost;
 
         
         props.playerMoneyMap.set(this.name, this.money);
+        console.log("inside Sell");
+        console.log(cost);
+        console.log(name_of_prop);
         //console.log("Sold!");
         // var index = this.properties.indexOf(place);
         // this.properties.splice(index, 1);
@@ -94,6 +120,18 @@ export class Player {
     Pay_Rent()
     {
         var props = get_props();
+        var place_name = NyThemeData.get(props.playerLocMap.get(this.name)).name;
+        if (place_name == "Chance"){
+            alert(
+                "You can't rent Chance; You won 100 Rs though!"
+            );
+            this.money = props.playerMoneyMap.get(this.name);
+            this.money+=100;
+    
+            
+            props.playerMoneyMap.set(this.name, this.money);
+            return -1;
+        }
         var loc = props.playerLocMap.get(this.name);
         var rent = NyThemeData.get(loc).rent;
         //var cost = NyThemeData.get(this.loc).rent;
