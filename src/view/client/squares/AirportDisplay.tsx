@@ -10,6 +10,7 @@ interface Props {
 export const AirportDisplay: React.FC<Props> = ({ id }) => {
 
     const txt: string | undefined = NyThemeData.get(id)?.name;
+    const rent: number | undefined = NyThemeData.get(id)?.rent;
 
     return (
         <React.Fragment>
@@ -17,7 +18,7 @@ export const AirportDisplay: React.FC<Props> = ({ id }) => {
             <div className="icon">
                 <FontAwesomeIcon icon={faPlane} size="3x" />
             </div>
-            <div className="square-name"> {txt}</div>
+            <div className="square-name"> {txt} <br></br><b>Rent: {rent} </b></div>
         </React.Fragment>
     );
 
