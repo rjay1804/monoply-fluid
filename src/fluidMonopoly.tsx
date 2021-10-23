@@ -47,6 +47,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
     private readonly presenceMapKey = "clientPresence";
     private readonly clientPlayerKey = "player-map";
     private readonly boardMapKey = "boardMap";
+    private readonly squareKey = "sq-key";
     private readonly locKey = "loc-map";
     private readonly playerNameKey = "pl-name-map";
     private readonly whoseTurnKey = "turn-map";
@@ -61,6 +62,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
     private SquareConfigData: ISharedMap | undefined;
     private whoseTurn: ISharedMap | undefined;
     private playerMoneyMap: ISharedMap | undefined;
+    private playerLocMap: ISharedMap | undefined;
 
     /**
      * ComponentInitializingFirstTime is where you do setup for your component. This is only called once the first time
@@ -73,6 +75,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         const boardMap = SharedMap.create(this.runtime);
         const player_ = SharedMap.create(this.runtime);
         const loc =  SharedMap.create(this.runtime);
+        const square =  SharedMap.create(this.runtime);
         const name_ = SharedMap.create(this.runtime);
         const turn_ = SharedMap.create(this.runtime);
         const money_ =  SharedMap.create(this.runtime);
@@ -81,16 +84,18 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.root.set(this.monopolyMapKey, map.handle);
         this.root.set(this.boardMapKey, boardMap.handle);
         this.root.set(this.clientPlayerKey, player_.handle);
-        this.root.set(this.locKey, loc.handle);
+        this.root.set(this.squareKey, square.handle);
         this.root.set(this.playerNameKey, name_.handle);
         this.root.set(this.whoseTurnKey, turn_.handle);
         this.root.set(this.playerMoneyKey, money_.handle);
+        this.root.set(this.locKey, loc.handle);
 
         // Create a SharedMap to store presence data
         const clientPresence = SharedMap.create(this.runtime);
         this.root.set(this.presenceMapKey, clientPresence.handle);
 
         this.whoseTurn = await this.root.get<IFluidHandle<ISharedMap>>(this.whoseTurnKey).get();
+        this.playerLocMap = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
         
         this.whoseTurn.set("whoseturn", 0);
         this.whoseTurn.set("number of current players", 0);
@@ -111,14 +116,14 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
 
         this.boardMap = await this.root.get<IFluidHandle<ISharedMap>>(this.boardMapKey).get();
         this.clientPlayerMap = await this.root.get<IFluidHandle<ISharedMap>>(this.clientPlayerKey).get();
-        this.SquareConfigData = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
+        this.SquareConfigData = await this.root.get<IFluidHandle<ISharedMap>>(this.squareKey).get();
         this.playerNameMap = await this.root.get<IFluidHandle<ISharedMap>>(this.playerNameKey).get();
         this.whoseTurn = await this.root.get<IFluidHandle<ISharedMap>>(this.whoseTurnKey).get();
         this.playerMoneyMap = await this.root.get<IFluidHandle<ISharedMap>>(this.playerMoneyKey).get();
        
 
         setPlayerProps(this.playerNameMap, this.clientPlayerMap, this.SquareConfigData, this.whoseTurn,
-                       this.playerMoneyMap);
+                       this.playerMoneyMap, this.playerLocMap);
 
 
 
@@ -155,6 +160,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
                         SquareConfigData={this.SquareConfigData}
                         whoseTurn={this.whoseTurn}
                         playerMoneyMap = {this.playerMoneyMap}
+                        playerLocMap = {this.playerLocMap}
                     />
                     
                 );
@@ -180,13 +186,13 @@ var twelve_color_array = ["#0048BA", "#D3212D", "#7FFFD4", "#F4C2C2", "#BFFF00",
                             "#FFF600", "#800020", "#ACE1AF", "#F7E7CE", "#AA381E", "#B9D9EB"]
 
 export function setPlayerProps(playerNameMap: ISharedMap, clientPlayerMap:ISharedMap, SquareConfigData: ISharedMap, whoseTurn: ISharedMap,
-                                playerMoneyMap: ISharedMap){
+                                playerMoneyMap: ISharedMap, playerLocMap: ISharedMap){
 
     var playerName = window.prompt('Enter your user name')
     var status =clientPlayerMap.get(playerName);
     if(status==undefined)
     {
-    console.log("Current size of playerName map (before input): ", playerNameMap.size);
+    //console.log("Current size of playerName map (before input): ", playerNameMap.size);
     if (playerName == undefined)
     {
         console.log("Yooooooo");
@@ -194,14 +200,15 @@ export function setPlayerProps(playerNameMap: ISharedMap, clientPlayerMap:IShare
     if (playerName!= undefined)
     {   
         var idx = whoseTurn.get("number of current players");
-        console.log("key_idx:", idx);
+        //console.log("key_idx:", idx);
         playerNameMap.set(idx + "", playerName);
 
         var colour = twelve_color_array[whoseTurn.get("number of current players") +3 % 12];
         clientPlayerMap.set(playerName, new Player(playerName, colour, idx)); 
         playerMoneyMap.set(playerName, 10000);
-        console.log("Money init:");
-        console.log(playerMoneyMap.get(idx + ""));
+        playerLocMap.set(playerName, 1);
+        //console.log("Money init:");
+        //console.log(playerMoneyMap.get(playerName));
 
 
         whoseTurn.set("number of current players", whoseTurn.get("number of current players") + 1);
@@ -269,10 +276,10 @@ export function setPlayerProps(playerNameMap: ISharedMap, clientPlayerMap:IShare
         SquareConfigData.set(39 + "", { type: SquareType.Chance, section: BoardSection.Right });
         SquareConfigData.set(40 + "", { type: SquareType.Property, section: BoardSection.Right, groupId: 8 });
         //playerNameList.push(playerName);  
-        console.log("Squareee");   
-        console.log(SquareConfigData.get(3 + ""));
-        console.log("End");
-        console.log("Size after new input:", playerNameMap.size);
+        // console.log("Squareee");   
+        // console.log(SquareConfigData.get(3 + ""));
+        // console.log("End");
+        // console.log("Size after new input:", playerNameMap.size);
 
     }
 

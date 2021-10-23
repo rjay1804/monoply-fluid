@@ -21,6 +21,7 @@ export interface IMonopolyViewProps {
     SquareConfigData: ISharedMap;
     whoseTurn:ISharedMap;
     playerMoneyMap: ISharedMap;
+    playerLocMap: ISharedMap;
 
 }
 
@@ -29,7 +30,7 @@ export var props_global;
 
 export function get_props()
 {
-    console.log("returning props");
+    //console.log("returning props");
     return props_global;
 }
 

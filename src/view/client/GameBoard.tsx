@@ -15,22 +15,22 @@ import styled from "styled-components";
 //   );
 // };
 
-{/* <Icon src={set_image(set_die_image)} /> */}
+{/* <Icon src={set_image(set_die_number)} /> */}
 
 var die = new Dice(6);
-var set_die_image = 2;
+var set_die_number = 2;
 var props_g;
 var size_g;
 var diceChar;
 
 function change_turn()
 {
-  console.log("Intial: ", props_g.whoseTurn.get("whoseturn"));
+  //console.log("Intial: ", props_g.whoseTurn.get("whoseturn"));
   var current_turn = props_g.whoseTurn.get("whoseturn");
   var next = (current_turn + 1) % (size_g)
   props_g.whoseTurn.set("whoseturn", next); 
-  console.log("Number of players:", size_g);
-  console.log("After move:", props_g.whoseTurn.get("whoseturn"));
+  //console.log("Number of players:", size_g);
+  //console.log("After move:", props_g.whoseTurn.get("whoseturn"));
 }
 
 function Get_Just_Played(){
@@ -45,11 +45,11 @@ function Buy_()
   var just_played = Get_Just_Played();
   var name = props_1.playerNameMap.get(just_played + "");
 
-  console.log("Get name", name);
-  console.log("Log Just Played", just_played);
+  //console.log("Get name", name);
+  //console.log("Log Just Played", just_played);
   //console.log(props_1.playerNameMap.keys())
-  console.log(props_1.clientPlayerMap.get(name));
-  console.log("Nameeeeeeeeeeeeee", name);
+  //console.log(props_1.clientPlayerMap.get(name));
+  //console.log("Nameeeeeeeeeeeeee", name);
   props_1.clientPlayerMap.get(name).Buy(props_1);
   props_1.whoseTurn.set("utility", false);
   change_turn();
@@ -129,17 +129,21 @@ Button.defaultProps = {
 function clickMe() {
   //Stop changing whosetrun here
   alert("Rolling...");
-  set_die_image = die.rollDice();
-  diceChar = String.fromCodePoint(0x267F+ set_die_image);
-  console.log("Die roll:");
-  console.log(set_die_image);
-  //alert(set_die_image);
+  set_die_number = die.rollDice();
+  diceChar = String.fromCodePoint(0x267F+ set_die_number);
+  //console.log("Die roll:");
+  //console.log(set_die_number);
+  //alert(set_die_number);
 
 
 
 
   props_g.whoseTurn.set("dice_char", diceChar)
   props_g.whoseTurn.set("utility", true);
+
+  var just_played = Get_Just_Played();
+  var name = props_g.playerNameMap.get(just_played + "");
+  props_g.clientPlayerMap.get(name).changeLoc(set_die_number);
   props_g.whoseTurn.set("trigger_render", !props_g.whoseTurn.get("trigger_render"));
 }
 
@@ -162,8 +166,8 @@ export default function GameBoard() {
   props_g = props;
   var size_ = props.whoseTurn.get("number of current players");
   size_g = size_;
-  console.log("Size inside game board: ");
-  console.log(size_);
+  //console.log("Size inside game board: ");
+  //console.log(size_);
   var playerNames = new Array<String>();
   var idx = 0;
   for(idx = 0; idx <size_; idx++){
@@ -172,8 +176,8 @@ export default function GameBoard() {
     playerNames.push(props.playerNameMap.get(idx + ""));
   }
 
-  console.log("these are the player names");
-  console.log(playerNames);
+  //console.log("these are the player names");
+  //console.log(playerNames);
   return (
     <React.Fragment> 
      
