@@ -1,11 +1,12 @@
 import { GameSquare } from "./GameSquare";
 import { get_props } from "../../react/monopolyView";
 import {Dice} from "../../model/Dice";
-import { NyThemeData } from "./NyTheme";
+//import { NyThemeData } from "./NyTheme";
 import  "./tab.css";
 
 import React from "react";
 import styled from "styled-components";
+import { SquareThemeData } from "./NyTheme";
 // import { Hidden, useIsFocusVisible } from "@material-ui/core";
 
 // const Icon = (props) => {
@@ -23,7 +24,9 @@ var set_die_number = 2;
 var props_g;
 var size_g;
 var diceChar;
-var start = true;
+var showInfo = false;
+var properties = new Array<SquareThemeData>();
+//var start = true;
 
 // const Get_Place = (name_) => {
 // const { name } = name_;
@@ -58,7 +61,8 @@ function Buy_()
   var props_1 = get_props();
   var just_played = Get_Just_Played();
   var name = props_1.playerNameMap.get(just_played + "");
-
+  var loc_name = props_1.playerLocMap.get(props_1.playerLocMap.get(name) + "-");
+  alert("Congratulations " + name + ", you purchased, " + loc_name);
   //console.log("Get name", name);
   //console.log("Log Just Played", just_played);
   //console.log(props_1.playerNameMap.keys())
@@ -71,20 +75,34 @@ function Buy_()
 }
 
 
-function Sell_()
+function Sell_1()
 {
   var props_1 = get_props();
   var just_played = Get_Just_Played();
   var name = props_1.playerNameMap.get(just_played + "");
-
+  
+  var player = props_1.clientPlayerMap.get(name);
+  console.log("What do I hold?")
+  console.log(player.properties); // these properties I hold right now
+  properties = player.properties;
+ 
+  //alert("Which Property do you want to sell?  [" + properties +"]");
   // console.log("Get name", name);
   // console.log("Log Just Played", just_played);
   // console.log(props_1.playerNameMap.keys())
-  props_1.clientPlayerMap.get(name).Sell();
-  change_turn();
+  showInfo = true;
+  //props_1.clientPlayerMap.get(name).Sell(5); //Just mocking [TO BE CHANGEDDDDD]
+  //change_turn();
   props_1.whoseTurn.set("utility", false);
+  console.log(properties);
   //props_1.whoseTurn.set("trigger_render", !props_1.whoseTurn.get("trigger_render"));
-  
+}
+
+function Sell_2()
+{
+  console.log("Is this happening?");
+  //props_1.clientPlayerMap.get(name).Sell(5);
+  change_turn();
 }
 
 
@@ -143,6 +161,7 @@ Button.defaultProps = {
 function clickMe() {
   //Stop changing whosetrun here
   alert("Rolling...");
+  showInfo=false;
   set_die_number = die.rollDice();
   diceChar = String.fromCodePoint(0x267F+ set_die_number);
   //console.log("Die roll:");
@@ -159,7 +178,7 @@ function clickMe() {
   var name = props_g.playerNameMap.get(just_played + "");
   props_g.clientPlayerMap.get(name).changeLoc(set_die_number);
   props_g.whoseTurn.set("trigger_render", !props_g.whoseTurn.get("trigger_render"));
-  start = false;
+  
 }
 
 
@@ -178,6 +197,7 @@ export default function GameBoard() {
   const num_squares: Array<number> = Array.from(Array(40));
   
   var props = get_props();
+  
   props_g = props;
   var size_ = props.whoseTurn.get("number of current players");
   size_g = size_;
@@ -246,7 +266,7 @@ export default function GameBoard() {
                <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Buy_}>Buy</Button> &nbsp;
               
                <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Pay_Rent_}>Pay rent </Button>  &nbsp;
-               <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Sell_}>Sell  </Button>
+               <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Sell_1}>Sell  </Button>
                </div>
                <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id || props.whoseTurn.get("utility") } 
                onClick={clickMe}>Roll</Button></div>
@@ -271,14 +291,23 @@ export default function GameBoard() {
           </table >
             <div>
              
-               
             </div>
-            
-            
+
+            <div style={{ display: showInfo ? "block" : "none" ,"color": "black", "backgroundColor": props.clientPlayerMap.get(props_g.playerNameMap.get(Get_Just_Played() + "")).colour}}>
+              {props_g.playerNameMap.get(Get_Just_Played() + "")}, these are your properties:
+            {properties.map(name_prop => (
+              
+             <div >&nbsp; {name_prop.name} <Button onClick={Sell_2()}>Sell  </Button> <br></br> </div> 
+            ))}
+
+            </div>
 
             <a href="https://fluidframework.com/docs/">Powered by Fluid</a>
+
            </div>
         </div> 
+        
+        
       </div>
       
     </React.Fragment>
