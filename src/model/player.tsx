@@ -1,6 +1,7 @@
 //const { randomUUID } = require("crypto");
 import { NyThemeData } from "../view/client/NyTheme";
 import {SquareThemeData} from "../view/client/NyTheme"
+import { get_props } from "../react/monopolyView";
 
 export class Player {
     
@@ -47,17 +48,39 @@ export class Player {
         var cost = NyThemeData.get(this.loc).price;
         console.log("Cost:", cost);
         console.log("Money before buying", this.money);
+        var props = get_props();
+        console.log("ID:", this.id);
+        console.log("Log something else:", props.playerNameMap);
+        console.log("Money:", props.playerMoneyMap);
+        this.money = props.playerMoneyMap.get(this.name);
         this.money-=cost;
+
+        
+        props.playerMoneyMap.set(this.name, this.money);
         console.log("Money after buying", this.money);
-        this.properties.push(NyThemeData.get(this.loc));
+        console.log(NyThemeData.get(this.loc));
+        //this.properties.push(NyThemeData.get(this.loc));
     }
 
     Sell(loc)
     {
-        var cost = NyThemeData.get(loc).price;
+        console.log("Before:", this.properties);
+        var place = NyThemeData.get(loc)
+        var cost = place.price;
         this.money+=cost;
         console.log("Sold!");
+        var index = this.properties.indexOf(place);
+        this.properties.splice(index, 1);
+        console.log("After:", this.properties);
 
+    }
+
+    Pay_Rent()
+    {
+        var rent = 10;
+        //var cost = NyThemeData.get(this.loc).rent;
+        console.log("Rent:", rent);
+        this.money-=rent;
     }
 
 }

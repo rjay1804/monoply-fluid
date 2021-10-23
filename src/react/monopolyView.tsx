@@ -20,6 +20,7 @@ export interface IMonopolyViewProps {
     clientPlayerMap: ISharedMap;
     SquareConfigData: ISharedMap;
     whoseTurn:ISharedMap;
+    playerMoneyMap: ISharedMap;
 
 }
 

@@ -23,26 +23,67 @@ var props_g;
 var size_g;
 var diceChar;
 
+function change_turn()
+{
+  console.log("Intial: ", props_g.whoseTurn.get("whoseturn"));
+  var current_turn = props_g.whoseTurn.get("whoseturn");
+  var next = (current_turn + 1) % (size_g)
+  props_g.whoseTurn.set("whoseturn", next); 
+  console.log("Number of players:", size_g);
+  console.log("After move:", props_g.whoseTurn.get("whoseturn"));
+}
+
 function Get_Just_Played(){
 
-    var just_played = props_g.whoseTurn.get("whoseturn") - 1;
-    if (just_played == -1)
-    {
-      just_played = props_g.playerNameMap.size - 1;
-    }
+    var just_played = props_g.whoseTurn.get("whoseturn");
     return just_played;
 }
 
 function Buy_()
 {
-  var props_1 = props_g;
+  var props_1 = get_props();
   var just_played = Get_Just_Played();
   var name = props_1.playerNameMap.get(just_played + "");
 
   console.log("Get name", name);
   console.log("Log Just Played", just_played);
-  console.log(props_1.playerNameMap.keys())
-  props_1.clientPlayerMap.get(name).Buy();
+  //console.log(props_1.playerNameMap.keys())
+  console.log(props_1.clientPlayerMap.get(name));
+  console.log("Nameeeeeeeeeeeeee", name);
+  props_1.clientPlayerMap.get(name).Buy(props_1);
+  change_turn();
+  
+}
+
+
+function Sell_()
+{
+  var props_1 = get_props();
+  var just_played = Get_Just_Played();
+  var name = props_1.playerNameMap.get(just_played + "");
+
+  // console.log("Get name", name);
+  // console.log("Log Just Played", just_played);
+  // console.log(props_1.playerNameMap.keys())
+  props_1.clientPlayerMap.get(name).Sell();
+  change_turn();
+  //props_1.whoseTurn.set("trigger_render", !props_1.whoseTurn.get("trigger_render"));
+  
+}
+
+
+function Pay_Rent_()
+{
+  var props_1 = get_props();
+  var just_played = Get_Just_Played();
+  var name = props_1.playerNameMap.get(just_played + "");
+
+  // console.log("Get name", name);
+  // console.log("Log Just Played", just_played);
+  // console.log(props_1.playerNameMap.keys())
+  props_1.clientPlayerMap.get(name).Pay_Rent();
+  change_turn();
+  
 }
 
 const theme = {
@@ -83,23 +124,19 @@ Button.defaultProps = {
 };
 
 function clickMe() {
+  //Stop changing whosetrun here
   alert("Rolling...");
   set_die_image = die.rollDice();
   diceChar = String.fromCodePoint(0x267F+ set_die_image);
   console.log("Die roll:");
   console.log(set_die_image);
-  alert(set_die_image);
-  console.log("Intial: ", props_g.whoseTurn.get("whoseturn"));
-  var current_turn = props_g.whoseTurn.get("whoseturn");
-  var next = (current_turn + 1) % (size_g)
-  props_g.whoseTurn.set("whoseturn", next); 
-  console.log("Number of players:", size_g);
-  console.log("After move:", props_g.whoseTurn.get("whoseturn"));
-  
-  var chance  = props_g.whoseTurn.get("dice");
-  props_g.whoseTurn.set("dice", !chance);
+  //alert(set_die_image);
+
+
+
+
   props_g.whoseTurn.set("dice_char", diceChar)
-  
+  props_g.whoseTurn.set("trigger_render", !props_g.whoseTurn.get("trigger_render"));
 }
 
 
@@ -135,6 +172,7 @@ export default function GameBoard() {
   console.log(playerNames);
   return (
     <React.Fragment> 
+     
       <div className="board">
         {num_squares.map((n, index) => {
           const id: number = index + 1;
@@ -174,14 +212,14 @@ export default function GameBoard() {
                <div className="divTableBody">
                <div className="divTableRow" style={{"color": "black", "backgroundColor": props.clientPlayerMap.get(name__).colour}}>
                <div className="divTableCell">&nbsp; {name__}</div> 
-               <div className="divTableCell">&nbsp; {props.clientPlayerMap.get(name__).money}</div>
+               <div className="divTableCell">&nbsp; {props.playerMoneyMap.get(name__)}</div>
 
               
                <div className="divTableCell">&nbsp; 
                <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Buy_}>Buy</Button> &nbsp;
               
-               <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Pay rent </Button>  &nbsp;
-               <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Sell  </Button>
+               <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Pay_Rent_}>Pay rent </Button>  &nbsp;
+               <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Sell_}>Sell  </Button>
                </div>
                <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Roll</Button></div>
                <div className="divTableCell" style={{"fontSize": 50,    visibility: get_vis(props, name__)}}  >&nbsp;     {props.whoseTurn.get("dice_char")} </div>
@@ -206,12 +244,6 @@ export default function GameBoard() {
              
                
             </div>
-
-            <div className="center-square square">
-
-
-              
-              </div>
             
             
 
