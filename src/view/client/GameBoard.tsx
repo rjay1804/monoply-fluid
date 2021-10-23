@@ -1,6 +1,7 @@
 import { GameSquare } from "./GameSquare";
 import { get_props } from "../../react/monopolyView";
 import {Dice} from "../../model/Dice";
+import { NyThemeData } from "./NyTheme";
 import  "./tab.css";
 
 import React from "react";
@@ -22,6 +23,19 @@ var set_die_number = 2;
 var props_g;
 var size_g;
 var diceChar;
+var start = true;
+
+// const Get_Place = (name_) => {
+// const { name } = name_;
+
+//   if(start == true)
+//   {
+//     return <div className="divTableCell">&nbsp; Go </div>
+//   }
+
+//   var place_ = NyThemeData.get(props_g.playerLocMap.get(name)).name;
+//   return <div className="divTableCell">&nbsp; {place_} </div>
+// }
 
 function change_turn()
 {
@@ -145,6 +159,7 @@ function clickMe() {
   var name = props_g.playerNameMap.get(just_played + "");
   props_g.clientPlayerMap.get(name).changeLoc(set_die_number);
   props_g.whoseTurn.set("trigger_render", !props_g.whoseTurn.get("trigger_render"));
+  start = false;
 }
 
 
@@ -204,8 +219,11 @@ export default function GameBoard() {
             <div className="divTable">
                <div className="divTableBody">
                <div className="divTableRow" style={{"color": "black", "backgroundColor": "cyan", width: 100, height: 10}}>
-               <div className="divTableCell">&nbsp; Player</div> <div className="divTableCell">&nbsp; Cash  </div> 
-               <div className="divTableCell">&nbsp; Take Action </div> <div className="divTableCell">&nbsp; Roll Dice </div>
+               <div className="divTableCell">&nbsp; Player Name</div> <div className="divTableCell">&nbsp; Cash  </div> 
+               <div className="divTableCell">&nbsp; Player Location </div>
+               <div className="divTableCell">&nbsp; Take Action </div>  
+               <div className="divTableCell">&nbsp; Roll Dice </div>
+               
                </div>
                </div>
                </div>
@@ -222,7 +240,8 @@ export default function GameBoard() {
                <div className="divTableCell">&nbsp; {name__}</div> 
                <div className="divTableCell">&nbsp; {props.playerMoneyMap.get(name__)}</div>
 
-              
+               <div className="divTableCell">&nbsp; {props.playerLocMap.get(props.playerLocMap.get(name__) + "-")}</div> 
+
                <div className="divTableCell">&nbsp; 
                <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Buy_}>Buy</Button> &nbsp;
               
@@ -231,6 +250,7 @@ export default function GameBoard() {
                </div>
                <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id || props.whoseTurn.get("utility") } 
                onClick={clickMe}>Roll</Button></div>
+
                <div className="divTableCell" style={{"fontSize": 50,    visibility: get_vis(props, name__)}}  >&nbsp;     {props.whoseTurn.get("dice_char")} </div>
                
                </div>   

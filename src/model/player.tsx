@@ -48,6 +48,8 @@ export class Player {
             new_loc = 1;
         }
         props.playerLocMap.set(this.name, new_loc);
+        var new_loc_name =  NyThemeData.get(new_loc).name;
+        props.playerLocMap.set(props.playerLocMap.get(this.name) + "-", new_loc_name);
         //console.log("new Location:", props.playerLocMap.get(this.name));
     }
 

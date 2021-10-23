@@ -95,7 +95,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.root.set(this.presenceMapKey, clientPresence.handle);
 
         this.whoseTurn = await this.root.get<IFluidHandle<ISharedMap>>(this.whoseTurnKey).get();
-        this.playerLocMap = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
+        
         
         this.whoseTurn.set("whoseturn", 0);
         this.whoseTurn.set("number of current players", 0);
@@ -120,6 +120,7 @@ export class FluidMonopoly extends DataObject implements IFluidHTMLView {
         this.playerNameMap = await this.root.get<IFluidHandle<ISharedMap>>(this.playerNameKey).get();
         this.whoseTurn = await this.root.get<IFluidHandle<ISharedMap>>(this.whoseTurnKey).get();
         this.playerMoneyMap = await this.root.get<IFluidHandle<ISharedMap>>(this.playerMoneyKey).get();
+        this.playerLocMap = await this.root.get<IFluidHandle<ISharedMap>>(this.locKey).get();
        
 
         setPlayerProps(this.playerNameMap, this.clientPlayerMap, this.SquareConfigData, this.whoseTurn,
@@ -190,6 +191,7 @@ export function setPlayerProps(playerNameMap: ISharedMap, clientPlayerMap:IShare
 
     var playerName = window.prompt('Enter your user name')
     var status =clientPlayerMap.get(playerName);
+    
     if(status==undefined)
     {
     //console.log("Current size of playerName map (before input): ", playerNameMap.size);
@@ -200,26 +202,32 @@ export function setPlayerProps(playerNameMap: ISharedMap, clientPlayerMap:IShare
     if (playerName!= undefined)
     {   
         var idx = whoseTurn.get("number of current players");
+        
         //console.log("key_idx:", idx);
         playerNameMap.set(idx + "", playerName);
 
+       
         var colour = twelve_color_array[whoseTurn.get("number of current players") +3 % 12];
         clientPlayerMap.set(playerName, new Player(playerName, colour, idx)); 
         playerMoneyMap.set(playerName, 10000);
+        
+        
         playerLocMap.set(playerName, 1);
+        playerLocMap.set(playerLocMap.get(playerName) + "-", "Go");
+        //console.log("upto here");
         //console.log("Money init:");
         //console.log(playerMoneyMap.get(playerName));
 
-
+        
         whoseTurn.set("number of current players", whoseTurn.get("number of current players") + 1);
-
+        
 
         
         // console.log("Let's see what is set");
         // console.log(clientPlayerMap.get(playerName));
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
         SquareConfigData.set(1 + "", { type: SquareType.Go, section: BoardSection.Bottom });
         SquareConfigData.set(2 + "", { type: SquareType.Property, section: BoardSection.Bottom, groupId: 1 });
         SquareConfigData.set(3 + "", { type: SquareType.Chance, section: BoardSection.Bottom });
