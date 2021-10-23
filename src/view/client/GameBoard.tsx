@@ -51,6 +51,7 @@ function Buy_()
   console.log(props_1.clientPlayerMap.get(name));
   console.log("Nameeeeeeeeeeeeee", name);
   props_1.clientPlayerMap.get(name).Buy(props_1);
+  props_1.whoseTurn.set("utility", false);
   change_turn();
   
 }
@@ -67,6 +68,7 @@ function Sell_()
   // console.log(props_1.playerNameMap.keys())
   props_1.clientPlayerMap.get(name).Sell();
   change_turn();
+  props_1.whoseTurn.set("utility", false);
   //props_1.whoseTurn.set("trigger_render", !props_1.whoseTurn.get("trigger_render"));
   
 }
@@ -82,6 +84,7 @@ function Pay_Rent_()
   // console.log("Log Just Played", just_played);
   // console.log(props_1.playerNameMap.keys())
   props_1.clientPlayerMap.get(name).Pay_Rent();
+  props_1.whoseTurn.set("utility", false);
   change_turn();
   
 }
@@ -136,6 +139,7 @@ function clickMe() {
 
 
   props_g.whoseTurn.set("dice_char", diceChar)
+  props_g.whoseTurn.set("utility", true);
   props_g.whoseTurn.set("trigger_render", !props_g.whoseTurn.get("trigger_render"));
 }
 
@@ -221,7 +225,8 @@ export default function GameBoard() {
                <Button  disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Pay_Rent_}>Pay rent </Button>  &nbsp;
                <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={Sell_}>Sell  </Button>
                </div>
-               <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id} onClick={clickMe}>Roll</Button></div>
+               <div className="divTableCell">&nbsp; <Button disabled = {props.whoseTurn.get("whoseturn") != props.clientPlayerMap.get(name__).id || props.whoseTurn.get("utility") } 
+               onClick={clickMe}>Roll</Button></div>
                <div className="divTableCell" style={{"fontSize": 50,    visibility: get_vis(props, name__)}}  >&nbsp;     {props.whoseTurn.get("dice_char")} </div>
                
                </div>   
